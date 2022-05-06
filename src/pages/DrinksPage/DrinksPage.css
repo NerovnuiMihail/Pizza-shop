@@ -1,0 +1,17 @@
+.drinks-page{
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+.drinks-page h1{
+    margin: 50px 0;
+    margin-top: 150px;
+    font-weight: 700;
+    font-size: 22px;
+}
+.drinks-content{
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 40px;
+    column-gap: 34px;
+}

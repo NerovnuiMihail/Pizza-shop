@@ -1,0 +1,17 @@
+.pizza-page{
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+.pizza-page h1{
+    margin: 50px 0;
+    margin-top: 150px;
+    font-weight: 700;
+    font-size: 22px;
+}
+.pizza-content{
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 40px;
+    column-gap: 34px;
+}
