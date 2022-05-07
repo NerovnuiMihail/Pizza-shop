@@ -1,12 +1,13 @@
-.header-wrapper{
+.header{
     position: fixed;
-    margin: 0 auto;
     top: 0;
     left: 0;
     right: 0;
-    /* bottom: 0; */
     z-index: 10;
+    box-shadow: 1px 2px 5px rgb(238, 216, 183);
     background-color: white;
+}
+.header-wrapper{
     width: 100%;
     min-height: 90px;
     display: flex;

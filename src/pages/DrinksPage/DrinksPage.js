@@ -3,6 +3,7 @@ import useApiData from '../../services/useApiData';
 import ExternalCard from '../../components/ExternalCard/ExternalCard';
 import Skeleton from '../../components/skeleton/Skeleton';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
+import InsideCard from '../../components/InsideCard/InsideCard';
 
 import './DrinksPage.css';
 
@@ -14,11 +15,12 @@ const DrinksPage = ({head}) => {
          // eslint-disable-next-line
     }, []);
 
-    const cards = !data.drinks ? null : data.drinks.map(({id, name, img, description, price}) => {
+    const cards = !data.drinks ? null : data.drinks.map(({id, name, weight, img, description, price}) => {
 
         return <ExternalCard key={id} 
-                contentHeight="500px"
+                Inside={InsideCard}
                 img={img} 
+                weight={`${weight} литра`}
                 title={name}
                 description={description} 
                 cost={price} 

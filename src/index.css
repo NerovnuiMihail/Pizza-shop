@@ -26,6 +26,10 @@ html,body{
     font-family: 'Roboto', sans-serif;
 }
 
+html {
+    overflow-y: scroll;
+}
+
 input,button,textarea{font-family: inherit;}
 
 input::-ms-clear{display: none;}

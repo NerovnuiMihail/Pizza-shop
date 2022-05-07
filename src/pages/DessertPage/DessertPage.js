@@ -3,6 +3,7 @@ import useApiData from '../../services/useApiData';
 import ExternalCard from '../../components/ExternalCard/ExternalCard';
 import Skeleton from '../../components/skeleton/Skeleton';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
+import InsideCard from '../../components/InsideCard/InsideCard';
 
 import './DessertPage.css';
 
@@ -14,10 +15,10 @@ const DessertPage = ({head}) => {
          // eslint-disable-next-line
     }, []);
 
-    const cards = !data.dessert ? null : data.dessert.map(({id, name, img, description, price}) => {
-
+    const cards = !data.dessert ? null : data.dessert.map(({id, name, img, description, price, weight}) => {
         return <ExternalCard key={id} 
-                contentHeight="500px"
+                Inside={InsideCard}
+                weight={`${weight} грамм`}
                 img={img} 
                 title={name}
                 description={description} 
