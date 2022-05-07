@@ -3,7 +3,7 @@ import Skeleton from '../../components/skeleton/Skeleton';
 
 import './CombosPage.css';
 
-const CombosPage = () => {
+const CombosPage = ({head}) => {
     return (
         <div className="combos-page content-wrapper">
             <Skeleton/>

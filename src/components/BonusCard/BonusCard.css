@@ -1,0 +1,38 @@
+.bonus-card{
+    width: 406px;
+    min-height: 370px;
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-start;
+    border-radius: 8px;
+    box-shadow: 1px 1px 4px bisque;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+.bonus-card__descr{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.bonus-card img{
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+.bonus-card h2{
+    margin: 20px 0;
+    font-size: 20px;
+}
+.bonus-card p{
+    font-size: 16px;
+}
+.bonus-card a{
+    display: block;
+    width: 140px;
+    margin: 50px 0 15px 15px;
+}
+.bonus-card button{
+    font-size: 20px;
+    padding: 10px;
+    width: 140px;
+    border-radius: 15px;
+    background-color: bisque;
+}

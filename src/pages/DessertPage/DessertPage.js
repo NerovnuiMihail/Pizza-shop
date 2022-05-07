@@ -6,7 +6,7 @@ import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 
 import './DessertPage.css';
 
-const DessertPage = () => {
+const DessertPage = ({head}) => {
     const [data, loading, error, getRequest] = useApiData();
 
     useEffect(() => {
@@ -30,7 +30,7 @@ const DessertPage = () => {
 
     return (
         <main className="dessert-page content-wrapper">
-            <h1>Часто заказывают:</h1>
+            {head ? <h1>Часто заказывают:</h1> : null}
             <section className="dessert-content">
                 {errorMessage}
                 {loadingData}

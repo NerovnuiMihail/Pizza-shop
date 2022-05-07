@@ -6,7 +6,7 @@ import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 
 import './PizzaPage.css';
 
-const PizzaPage = () => {
+const PizzaPage = ({head}) => {
     const [data, loading, error, getRequest] = useApiData();
 
     useEffect(() => {
@@ -32,7 +32,7 @@ const PizzaPage = () => {
 
     return (
         <main className="content-wrapper pizza-page">
-            <h1>Часто заказывают:</h1>
+            {head ? <h1>Часто заказывают:</h1> : null}
             <section className="pizza-content">
                 {errorMessage}
                 {loadingData}

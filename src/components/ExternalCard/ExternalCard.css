@@ -1,10 +1,13 @@
 .ExternalCard{
     cursor: pointer;
-    width: 292px;
-    height: 454px;
+    width: 306px;
+    min-height: 530px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 1px 1px 4px bisque;
 }
 .ExternalCard__img{
     width: 278px;

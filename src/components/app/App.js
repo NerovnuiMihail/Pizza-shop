@@ -19,11 +19,11 @@ function App() {
 			<Routes>
 				<Route path="/" element={<Layout />}>
 					<Route index element={<HomePage/>} />
-					<Route path="pizza" element={<PizzaPage/>} />
-					<Route path="combos" element={<CombosPage/>} />
-					<Route path="snacks" element={<SnacksPage/>} />
-					<Route path="drinks" element={<DrinksPage/>} />
-					<Route path="dessert" element={<DessertPage/>} />
+					<Route path="pizza" element={<PizzaPage head />} />
+					<Route path="combos" element={<CombosPage head />} />
+					<Route path="snacks" element={<SnacksPage head />} />
+					<Route path="drinks" element={<DrinksPage head />} />
+					<Route path="dessert" element={<DessertPage head />} />
 					<Route path="bonusactions" element={<BonusActionsPage/>} />
 					<Route path="*" element={<NotFoundPage/>} />
 				</Route>
