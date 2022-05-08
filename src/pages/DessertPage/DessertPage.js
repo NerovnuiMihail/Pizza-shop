@@ -15,10 +15,11 @@ const DessertPage = ({head}) => {
          // eslint-disable-next-line
     }, []);
 
-    const cards = !data.dessert ? null : data.dessert.map(({id, name, img, description, price, weight}) => {
+    const cards = !data.dessert ? null : data.dessert.map(({id, name, img, description, price, weight, calories}) => {
         return <ExternalCard key={id} 
                 Inside={InsideCard}
                 weight={`${weight} грамм`}
+                calories={calories}
                 img={img} 
                 title={name}
                 description={description} 

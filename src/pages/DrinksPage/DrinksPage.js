@@ -15,10 +15,11 @@ const DrinksPage = ({head}) => {
          // eslint-disable-next-line
     }, []);
 
-    const cards = !data.drinks ? null : data.drinks.map(({id, name, weight, img, description, price}) => {
+    const cards = !data.drinks ? null : data.drinks.map(({id, name, weight, calories, img, description, price}) => {
 
         return <ExternalCard key={id} 
                 Inside={InsideCard}
+                calories={calories}
                 img={img} 
                 weight={`${weight} литра`}
                 title={name}

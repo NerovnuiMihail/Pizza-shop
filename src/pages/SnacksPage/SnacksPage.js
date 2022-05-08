@@ -15,11 +15,12 @@ const SnacksPage = ({head}) => {
          // eslint-disable-next-line
     }, []);
 
-    const cards = !data.snacks ? null : data.snacks.map(({id, name, weight, img, description, price}) => {
+    const cards = !data.snacks ? null : data.snacks.map(({id, name, weight, calories, img, description, price}) => {
 
         return <ExternalCard key={id} 
                 Inside={InsideCard}
                 weight={`${weight} грамм`}
+                calories={calories}
                 img={img} 
                 title={name}
                 description={description} 

@@ -17,7 +17,8 @@ nav,footer,header,aside{display: block;}
 
 html,body{
     height: 100%;
-    width: 100%;
+    /* width: 100%; */
+    width: 100vw;
     line-height: 1;
     font-size: 14px;
     -ms-text-size-adjust: 100%;
@@ -26,8 +27,11 @@ html,body{
     font-family: 'Roboto', sans-serif;
 }
 
-html {
+/* html {
     overflow-y: scroll;
+} */
+body {
+    overflow-x: hidden;
 }
 
 input,button,textarea{font-family: inherit;}

@@ -4,12 +4,13 @@ import Portal from '../Portal/Portal';
 import './ExternalCard.css';
 
 
-const ExternalCard = ({img, title, weight, description, cost, btnName, Inside}) => {
+const ExternalCard = ({hard, img, image, price, title, weight, description, cost, btnName, calories, Inside}) => {
     const [isVisible, setIsVisible] = useState(false);
 
     const handleClick = (e) => {
         if (e.target.localName !== 'button') {
             document.querySelector('#modal-root').style.display = 'block';
+            document.querySelector('.header').style.marginRight = "17px";
             document.body.style.overflow = 'hidden';
             setIsVisible(true);
         }
@@ -35,11 +36,14 @@ const ExternalCard = ({img, title, weight, description, cost, btnName, Inside}) 
                 <Portal>
                     <Inside 
                         setIsVisible={setIsVisible} 
+                        calories={calories}
                         img={img} 
+                        image={image}
                         title={title} 
                         weight={weight} 
                         description={description} 
-                        cost={cost} />
+                        cost={cost}
+                        price={price} />
                 </Portal>
             )}
         </>

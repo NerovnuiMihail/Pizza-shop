@@ -1,0 +1,22 @@
+.calories-card{
+    padding: 15px;
+    width: 270px;
+    height: 140px;
+    display: flex;
+    flex-direction: column;
+    background-color: black;
+    border-radius: 12px;
+}
+.calories-card h3{
+    color: white;
+    margin-bottom: 10px;
+}
+.calories-card ul{
+    color: white;
+}
+.calories-card li{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
