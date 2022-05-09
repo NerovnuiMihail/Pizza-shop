@@ -5,7 +5,7 @@ import close from './close.png';
 
 import './InsideCard.css';
 
-const InsideCard = ({setIsVisible, calories, img, title, weight, description, cost}) => {
+const InsideCard = ({setIsVisible, calories, img, name, weight, description, price}) => {
     const [hideCalories, setHideCalories] = useState(true);
 
     useEffect(() => {
@@ -52,15 +52,15 @@ const InsideCard = ({setIsVisible, calories, img, title, weight, description, co
                 </div>
             </div>
             <div className="inside-card__img">
-                <img src={img} alt={title} />
+                <img src={img} alt={name} />
             </div>
             <div className="inside-card__descr">
                 <div className="inside-card__descr-top">
-                    <h2 className="inside-card__title">{title}</h2>
+                    <h2 className="inside-card__title">{name}</h2>
                     <p className="inside-card__weight">{weight}</p>
                     <p className="inside-card__description">{description}</p>
                 </div>
-                <button className="inside-card__btn">{cost} &#x20bd;</button>
+                <button className="inside-card__btn">{price} &#x20bd;</button>
             </div>
         </div>
     );

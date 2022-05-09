@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import CaloriesCard from '../CaloriesCard/CaloriesCard';
+import InsideSelect from './InsideSelect/InsideSelect';
 import info from './info.png';
 import close from './close.png';
 
 import './InsideHardCard.css';
 
-const InsideHardCard = ({setIsVisible, price, image: {thin,traditional}, title, calories, description, }) => {
+
+const InsideHardCard = ({setIsVisible, price, dough, img: {thin,traditional}, title, calories, description}) => {
     const descr = description.slice().split(',').join(', ').toLowerCase();
     const [hideCalories, setHideCalories] = useState(true);
 
@@ -57,7 +59,14 @@ const InsideHardCard = ({setIsVisible, price, image: {thin,traditional}, title, 
                     )}
                 </div>
                 <p className="inside-hard-card__description">{descr}</p>
-                <button className="inside-hard-card__btn">{price[25]} &#x20bd;</button>
+
+                <InsideSelect />
+                
+                <div className="EXTRA">
+                    <h2>Добавить в пиццу</h2>
+                </div>
+
+                <button className="inside-hard-card__btn">Добавить в корзину за {price[25]} &#x20bd;</button>
             </div>
         </div>
     )

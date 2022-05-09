@@ -8,22 +8,18 @@ import InsideCard from '../../components/InsideCard/InsideCard';
 import './DessertPage.css';
 
 const DessertPage = ({head}) => {
-    const [data, loading, error, getRequest] = useApiData();
+    const [data, loading, error, getRequest] = useApiData("dessert");
 
     useEffect(() => {
         getRequest('http://localhost:3001/api/dessert');
          // eslint-disable-next-line
     }, []);
 
-    const cards = !data.dessert ? null : data.dessert.map(({id, name, img, description, price, weight, calories}) => {
-        return <ExternalCard key={id} 
+    const cards = !data ? null : data.map((item) => {
+        return <ExternalCard key={item.id} 
+                {...item}
                 Inside={InsideCard}
-                weight={`${weight} грамм`}
-                calories={calories}
-                img={img} 
-                title={name}
-                description={description} 
-                cost={price} 
+                weight={`${item.weight} грамм`}
                 btnName="В корзину" />
     });
 

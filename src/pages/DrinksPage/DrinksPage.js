@@ -8,23 +8,19 @@ import InsideCard from '../../components/InsideCard/InsideCard';
 import './DrinksPage.css';
 
 const DrinksPage = ({head}) => {
-    const [data, loading, error, getRequest] = useApiData();
+    const [data, loading, error, getRequest] = useApiData("drinks");
 
     useEffect(() => {
         getRequest('http://localhost:3001/api/drinks');
          // eslint-disable-next-line
     }, []);
 
-    const cards = !data.drinks ? null : data.drinks.map(({id, name, weight, calories, img, description, price}) => {
+    const cards = !data ? null : data.map((item) => {
 
-        return <ExternalCard key={id} 
+        return <ExternalCard key={item.id} 
                 Inside={InsideCard}
-                calories={calories}
-                img={img} 
-                weight={`${weight} литра`}
-                title={name}
-                description={description} 
-                cost={price} 
+                {...item}
+                weight={`${item.weight} литра`}
                 btnName="В корзину" />
     });
 

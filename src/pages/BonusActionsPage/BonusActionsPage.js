@@ -7,20 +7,16 @@ import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import './BonusActionsPage.css';
 
 const BonusActionsPage = () => {
-    const [data, loading, error, getRequest] = useApiData();
+    const [data, loading, error, getRequest] = useApiData("bonus");
 
     useEffect(() => {
         getRequest('http://localhost:3001/api/bonus');
          // eslint-disable-next-line
     }, []);
 
-    const cards = !data.bonus ? null : data.bonus.map(({id, title, img, description, link}) => {
+    const cards = !data ? null : data.map((item) => {
 
-        return <BonusCard key={id} 
-                img={img} 
-                title={title}
-                description={description} 
-                link={link} />
+        return <BonusCard key={item.id} {...item} />
     });
 
     const errorMessage = error ? <ErrorMessage/> : null;

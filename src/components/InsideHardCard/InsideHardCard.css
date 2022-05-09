@@ -1,13 +1,21 @@
 .inside-hard-card{
     margin: 170px auto;
     padding: 30px;
+    padding-right: 40px;
     width: 970px;
-    height: 600px;
+    height: 670px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     border-radius: 20px;
     background-color: white;
+}
+.EXTRA{
+    font-size: 25px;
+    margin: 15px 0;
+    width: 100%;
+    height: 320px;
+    border: 1px solid gray;
 }
 .inside-hard-card__view-img{
     display: flex;
@@ -29,11 +37,12 @@
 }
 .inside-hard-card__description{
     line-height: 21px;
+    margin-bottom: 15px;
 }
 .inside-hard-card__action-btn{
     position: absolute;
     top: -25px;
-    right: -23px;
+    right: -33px;
     display: flex;
     flex-direction: column;
     align-items: center;

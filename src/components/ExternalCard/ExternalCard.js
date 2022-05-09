@@ -4,7 +4,7 @@ import Portal from '../Portal/Portal';
 import './ExternalCard.css';
 
 
-const ExternalCard = ({hard, img, image, price, title, weight, description, cost, btnName, calories, Inside}) => {
+const ExternalCard = ({img, image, price, cost, name, description, btnName, Inside, ...props}) => {
     const [isVisible, setIsVisible] = useState(false);
 
     const handleClick = (e) => {
@@ -21,13 +21,13 @@ const ExternalCard = ({hard, img, image, price, title, weight, description, cost
             <div onClick={handleClick} className="ExternalCard">
                 <div className="ExternalCard__main">
                     <div className='ExternalCard__img'>
-                        <img src={img} alt={title} />
+                        <img src={image ? image : img} alt={name} />
                     </div>
-                    <h2>{title}</h2>
+                    <h2>{name}</h2>
                     <p className='ExternalCard__description'>{description}</p>
                 </div>
                 <div className='ExternalCard__footer'>
-                    <p className='ExternalCard__cost'>{cost} &#x20bd; </p>
+                    <p className='ExternalCard__cost'>{cost ? cost : price} &#x20bd; </p>
                     <button>{btnName}</button>
                 </div>
             </div>
@@ -36,13 +36,11 @@ const ExternalCard = ({hard, img, image, price, title, weight, description, cost
                 <Portal>
                     <Inside 
                         setIsVisible={setIsVisible} 
-                        calories={calories}
+                        {...props}
                         img={img} 
                         image={image}
-                        title={title} 
-                        weight={weight} 
+                        name={name} 
                         description={description} 
-                        cost={cost}
                         price={price} />
                 </Portal>
             )}
