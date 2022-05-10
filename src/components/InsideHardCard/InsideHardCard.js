@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addNewPizzaItem } from '../../store/basketSlice';
+import { addNewPizzaItem, setCostExtra, ChangeSelectExtra } from '../../store/basketSlice';
 import CaloriesCard from '../CaloriesCard/CaloriesCard';
 import InsideSelect from './InsideSelect/InsideSelect';
 import ExtraSelect from './extraSelect/ExtraSelect';
@@ -14,12 +14,15 @@ import './InsideHardCard.css';
 const InsideHardCard = ({setIsVisible, id, price, dough, img: {thin,traditional}, name, calories, description}) => {
     const [hideCalories, setHideCalories] = useState(true);
     const basket = useSelector(state => state.basket.basket.pizza);
+    const costExtra = useSelector(state => state.basket.basket.costExtra);
+    const selectExtra = useSelector(state => state.basket.basket.selectExtra);
     const dispatch = useDispatch();
     const {dough: rDough, size: rSize} = useSelector(state => state.shop.selectPizza);
     const descr = description.slice().split(',').join(', ').toLowerCase();
 
     useEffect(() => {
         document.body.addEventListener('click', handleClick);
+        dispatch(setCostExtra(price[rSize]));
 
         return () => {
             document.body.removeEventListener('click', handleClick);
@@ -51,12 +54,13 @@ const InsideHardCard = ({setIsVisible, id, price, dough, img: {thin,traditional}
             weight: dough[rDough].weight[rSize],
             size: rSize,
             dough: rDough,
-            extra: ['сыр','колбаса','огурци'],
-            cost: price[rSize],
+            extra: [...selectExtra],
+            cost: costExtra,
             count: 1
         };
 
         dispatch(addNewPizzaItem(addFiltredPizzaToBasket(basket, basketItem)));
+        dispatch(ChangeSelectExtra([]));
         // добавить отправку на сервер
 
         hidePortal();
@@ -93,13 +97,14 @@ const InsideHardCard = ({setIsVisible, id, price, dough, img: {thin,traditional}
                     )}
                 </div>
                 <p className="inside-hard-card__description">{descr}</p>
-                <InsideSelect />
+
+                <InsideSelect price={price} />
                 
                 <ExtraSelect />
 
                 <button
                     onClick={handleAddItemInBasket} 
-                    className="inside-hard-card__btn">Добавить в корзину за {price[rSize]} &#x20bd;</button>
+                    className="inside-hard-card__btn">Добавить в корзину за {costExtra} &#x20bd;</button>
             </div>
         </div>
     )

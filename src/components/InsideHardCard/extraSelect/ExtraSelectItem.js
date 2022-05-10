@@ -1,11 +1,26 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { ChangeSelectExtra, setCostExtra } from '../../../store/basketSlice';
 import './ExtraSelect.css';
 
 const ExtraSelectItem = ({id, img, name, cost}) => {
     const [isActive, setIsActive] = useState(false);
+    const selectExtra = useSelector(state => state.basket.basket.selectExtra);
+    const costExtra = useSelector(state => state.basket.basket.costExtra);
+    const dispatch = useDispatch();
 
     const handleChoise = () => {
         setIsActive(isActive => !isActive);
+
+        if (!isActive) {
+            const selectItem = [...selectExtra, name];
+            dispatch(ChangeSelectExtra(selectItem));
+            dispatch(setCostExtra(+costExtra + (+cost)));
+        } else {
+            const selectItem = [...selectExtra.filter(item => item !== name)];
+            dispatch(ChangeSelectExtra(selectItem));
+            dispatch(setCostExtra(+costExtra - (+cost)));
+        }
     }
 
     return (

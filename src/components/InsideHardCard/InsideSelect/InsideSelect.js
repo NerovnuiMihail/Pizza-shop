@@ -1,11 +1,14 @@
 import { useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeSelectPizza } from '../../../store/shopSlice';
+import { setCostExtra } from '../../../store/basketSlice';
 import './InsideSelect.css';
 
-const InsideSelect = () => {
+const InsideSelect = ({price}) => {
     const dispatch = useDispatch();
     const {dough, size} = useSelector(state => state.shop.selectPizza);
+    const costExtra = useSelector(state => state.basket.basket.costExtra);
+
     const ref25 = useRef();
     const ref30 = useRef();
     const ref35 = useRef();
@@ -25,6 +28,7 @@ const InsideSelect = () => {
         arrSize.forEach(item => item.classList.remove("size-item__active"));
         e.target.classList.add("size-item__active");
         dispatch(changeSelectPizza({size: e.target.name, dough}));
+        dispatch(setCostExtra(+costExtra - (+price[size]) + (+price[e.target.name])));
     };
 
     const handleDoughChange = (e) => {
@@ -38,6 +42,7 @@ const InsideSelect = () => {
             ref25.current.classList.remove("size-item__active");
             ref30.current.classList.add("size-item__active");
             dispatch(changeSelectPizza({size: "30", dough: "thin"}));
+            dispatch(setCostExtra(+costExtra - (+price[size]) + (+price[30])));
         }
     };
 

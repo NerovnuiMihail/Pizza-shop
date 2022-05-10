@@ -8,7 +8,9 @@ const basketSlice = createSlice({
             dessert: [],
             drinks: [],
             snacks: [],
-            combos: []
+            combos: [],
+            selectExtra: [],
+            costExtra: 0
         }
     },
     reducers: {
@@ -27,6 +29,12 @@ const basketSlice = createSlice({
         addNewCombosItem(state, action) {
             state.basket.combos = action.payload
         },
+        ChangeSelectExtra(state, action) {
+            state.basket.selectExtra = action.payload
+        },
+        setCostExtra(state, action) {
+            state.basket.costExtra = action.payload
+        }
     }
 });
 
@@ -35,6 +43,8 @@ export const {
     addNewDessertItem,
     addNewDrinksItem,
     addNewSnacksItem,
-    addNewCombosItem
+    addNewCombosItem,
+    ChangeSelectExtra,
+    setCostExtra
 } = basketSlice.actions;
 export default basketSlice.reducer;
