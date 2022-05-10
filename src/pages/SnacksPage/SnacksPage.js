@@ -13,7 +13,7 @@ const SnacksPage = ({head}) => {
     useEffect(() => {
         getRequest('http://localhost:3001/api/snacks');
 
-         // eslint-disable-next-line
+        // eslint-disable-next-line
     }, []);
 
     const cards = !data ? null : data.map((item) => {

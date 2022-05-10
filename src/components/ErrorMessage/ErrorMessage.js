@@ -1,10 +1,10 @@
 import img from './error.gif';
 import './ErrorMessage.css';
 
-const ErrorMessage = () => {
+const ErrorMessage = ({classes}) => {
     return (
         <div className="error-message">
-            <img src={img} alt="error" />
+            <img src={img} alt="error" style={classes ? classes : null} />
         </div>
     )
 }

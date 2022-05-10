@@ -9,6 +9,7 @@ const shopSlice = createSlice({
         drinks: [],
         snacks: [],
         bonus: [],
+        extra: [],
         selectPizza: {
             dough: "traditional",
             size: 25
@@ -30,6 +31,9 @@ const shopSlice = createSlice({
         setBonusData(state, action) {
             state.bonus = action.payload.bonus
         },
+        setExtraData(state, action) {
+            state.extra = action.payload.extra
+        },
         changeSelectPizza(state, action) {
             state.selectPizza.dough = action.payload.dough;
             state.selectPizza.size = action.payload.size
@@ -43,6 +47,7 @@ export const {
     setDrinksData, 
     setSnacksData, 
     setBonusData, 
+    setExtraData,
     changeSelectPizza 
 } = shopSlice.actions;
 export default shopSlice.reducer;

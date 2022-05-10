@@ -1,6 +1,13 @@
 import { useState, useCallback } from "react";
 import {useDispatch,useSelector} from "react-redux";
-import {setPizzaData, setDessertData, setDrinksData, setSnacksData, setBonusData } from "../store/shopSlice";
+import {
+    setPizzaData, 
+    setDessertData, 
+    setDrinksData, 
+    setSnacksData, 
+    setBonusData, 
+    setExtraData 
+} from "../store/shopSlice";
 
 
 function useApiData(TITLE) {
@@ -34,6 +41,9 @@ function useApiData(TITLE) {
                         break;
                     case "bonus":
                         dispatch(setBonusData(response));
+                        break;
+                    case "extra":
+                        dispatch(setExtraData(response));
                         break;
                 
                     default:

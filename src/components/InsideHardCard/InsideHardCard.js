@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addNewPizzaItem } from '../../store/basketSlice';
 import CaloriesCard from '../CaloriesCard/CaloriesCard';
 import InsideSelect from './InsideSelect/InsideSelect';
+import ExtraSelect from './extraSelect/ExtraSelect';
 import addFiltredPizzaToBasket from '../../services/addFiltredPizzaToBasket';
 import info from './info.png';
 import close from './close.png';
@@ -94,9 +95,7 @@ const InsideHardCard = ({setIsVisible, id, price, dough, img: {thin,traditional}
                 <p className="inside-hard-card__description">{descr}</p>
                 <InsideSelect />
                 
-                <div className="EXTRA">
-                    <h2>Добавить в пиццу</h2>
-                </div>
+                <ExtraSelect />
 
                 <button
                     onClick={handleAddItemInBasket} 

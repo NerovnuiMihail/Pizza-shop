@@ -2,20 +2,13 @@
     margin: 170px auto;
     padding: 30px;
     padding-right: 40px;
-    width: 970px;
-    height: 670px;
+    width: 990px;
+    height: 680px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     border-radius: 20px;
     background-color: white;
-}
-.EXTRA{
-    font-size: 25px;
-    margin: 15px 0;
-    width: 100%;
-    height: 320px;
-    border: 1px solid gray;
 }
 .inside-hard-card__view-img{
     display: flex;
@@ -27,17 +20,17 @@
     height: auto;
 }
 .inside-hard-card__content-wrapper{
-    width: 450px;
+    width: 510px;
     position: relative;
     height: 100%;
 }
 .inside-hard-card__title{
     font-size: 24px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 .inside-hard-card__description{
     line-height: 21px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 .inside-hard-card__action-btn{
     position: absolute;
@@ -64,7 +57,7 @@
 }
 .inside-hard-card__filtred-value{
     font-size: 17px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 .inside-hard-card__btn{
     font-size: 20px;
