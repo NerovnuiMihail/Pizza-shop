@@ -1,15 +1,21 @@
 import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addNewPizzaItem } from '../../store/basketSlice';
 import CaloriesCard from '../CaloriesCard/CaloriesCard';
 import InsideSelect from './InsideSelect/InsideSelect';
+import addFiltredPizzaToBasket from '../../services/addFiltredPizzaToBasket';
 import info from './info.png';
 import close from './close.png';
 
 import './InsideHardCard.css';
 
 
-const InsideHardCard = ({setIsVisible, price, dough, img: {thin,traditional}, title, calories, description}) => {
-    const descr = description.slice().split(',').join(', ').toLowerCase();
+const InsideHardCard = ({setIsVisible, id, price, dough, img: {thin,traditional}, name, calories, description}) => {
     const [hideCalories, setHideCalories] = useState(true);
+    const basket = useSelector(state => state.basket.basket.pizza);
+    const dispatch = useDispatch();
+    const {dough: rDough, size: rSize} = useSelector(state => state.shop.selectPizza);
+    const descr = description.slice().split(',').join(', ').toLowerCase();
 
     useEffect(() => {
         document.body.addEventListener('click', handleClick);
@@ -17,15 +23,19 @@ const InsideHardCard = ({setIsVisible, price, dough, img: {thin,traditional}, ti
         return () => {
             document.body.removeEventListener('click', handleClick);
         }
-         // eslint-disable-next-line
+        // eslint-disable-next-line
     }, []);
+
+    const hidePortal = () => {
+        document.body.style.overflow = "";
+        document.querySelector('#modal-root').style.display = "none";
+        document.querySelector('.header').style.marginRight = "";
+        setIsVisible(false);
+    }
 
     const handleClick = (e) => {
         if (e.target.classList.contains("inside-hard-card__close") || e.target.classList.contains("inside-hard-card__close-img") || e.target.id === "modal-root") {
-            document.body.style.overflow = "";
-            document.querySelector('#modal-root').style.display = "none";
-            document.querySelector('.header').style.marginRight = "";
-            setIsVisible(false);
+            hidePortal();
         }
     }
 
@@ -33,14 +43,37 @@ const InsideHardCard = ({setIsVisible, price, dough, img: {thin,traditional}, ti
         setHideCalories(hideCalories => !hideCalories);
     }
 
+    const handleAddItemInBasket = () => {
+        const basketItem = {
+            id: id,
+            name: name,
+            weight: dough[rDough].weight[rSize],
+            size: rSize,
+            dough: rDough,
+            extra: ['сыр','колбаса','огурци'],
+            cost: price[rSize],
+            count: 1
+        };
+
+        dispatch(addNewPizzaItem(addFiltredPizzaToBasket(basket, basketItem)));
+        // добавить отправку на сервер
+
+        hidePortal();
+        // добавить информирование о добавлении в корзину
+    };
+
     return (
         <div className="inside-hard-card">
             <div className="inside-hard-card__view-img">
-                <img src={traditional} alt={title} />
+                <img src={rDough === "traditional" ? traditional : thin} alt={name} />
             </div>
             <div className="inside-hard-card__content-wrapper">
-                <h2 className="inside-hard-card__title">{title}</h2>
-                <p className="inside-hard-card__filtred-value"> <span>35 cm</span>, <span>традиционное тесто</span>, <span>800 г</span> </p>
+                <h2 className="inside-hard-card__title">{name}</h2>
+                <p className="inside-hard-card__filtred-value">
+                    <span>{rSize} см</span>,
+                    <span> {rDough === "traditional" ? "традиционное тесто" : "тонкое тесто"}</span>,
+                    <span> {dough[rDough].weight[rSize]} г</span>
+                </p>
                 <div className="inside-hard-card__action-btn">
                     <div className="inside-hard-card__close">
                         <img src={close} 
@@ -59,14 +92,15 @@ const InsideHardCard = ({setIsVisible, price, dough, img: {thin,traditional}, ti
                     )}
                 </div>
                 <p className="inside-hard-card__description">{descr}</p>
-
                 <InsideSelect />
                 
                 <div className="EXTRA">
                     <h2>Добавить в пиццу</h2>
                 </div>
 
-                <button className="inside-hard-card__btn">Добавить в корзину за {price[25]} &#x20bd;</button>
+                <button
+                    onClick={handleAddItemInBasket} 
+                    className="inside-hard-card__btn">Добавить в корзину за {price[rSize]} &#x20bd;</button>
             </div>
         </div>
     )

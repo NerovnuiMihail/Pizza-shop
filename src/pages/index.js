@@ -7,6 +7,7 @@ import HomePage from "./HomePage/HomePage";
 import NotFoundPage from "./NotFoundPage/NotFoundPage";
 import PizzaPage from "./PizzaPage/PizzaPage";
 import SnacksPage from "./SnacksPage/SnacksPage";
+import BasketPage from "./Basket/BasketPage";
 
 
 export {
@@ -18,5 +19,6 @@ export {
     HomePage,
     NotFoundPage,
     PizzaPage,
-    SnacksPage
+    SnacksPage,
+    BasketPage
 }

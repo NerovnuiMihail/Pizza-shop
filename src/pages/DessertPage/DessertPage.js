@@ -18,6 +18,7 @@ const DessertPage = ({head}) => {
     const cards = !data ? null : data.map((item) => {
         return <ExternalCard key={item.id} 
                 {...item}
+                pageName="dessert"
                 Inside={InsideCard}
                 weight={`${item.weight} грамм`}
                 btnName="В корзину" />

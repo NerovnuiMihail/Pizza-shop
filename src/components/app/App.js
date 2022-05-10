@@ -9,7 +9,8 @@ import {
     HomePage,
     NotFoundPage,
     PizzaPage,
-    SnacksPage
+    SnacksPage,
+	BasketPage
 } from "../../pages";
 
 
@@ -25,6 +26,7 @@ function App() {
 					<Route path="drinks" element={<DrinksPage head />} />
 					<Route path="dessert" element={<DessertPage head />} />
 					<Route path="bonusactions" element={<BonusActionsPage/>} />
+					<Route path="basket" element={<BasketPage />} />
 					<Route path="*" element={<NotFoundPage/>} />
 				</Route>
 			</Routes>

@@ -1,21 +1,30 @@
-import { useState, useRef } from 'react';
+import { useRef, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeSelectPizza } from '../../../store/shopSlice';
 import './InsideSelect.css';
 
 const InsideSelect = () => {
-    const [size, setSize] = useState("25");
-    const [dough, setDough] = useState("traditional");
+    const dispatch = useDispatch();
+    const {dough, size} = useSelector(state => state.shop.selectPizza);
     const ref25 = useRef();
     const ref30 = useRef();
     const ref35 = useRef();
     const refThin = useRef();
     const refTraditional = useRef();
 
+    useEffect(() => {
+        return () => {
+            dispatch(changeSelectPizza({size: "25", dough: "traditional"}));
+        }
+        // eslint-disable-next-line
+    }, [])
+
     const handleSizeChange = (e) => {
         const arrSize = [ref25.current, ref30.current, ref35.current];
 
         arrSize.forEach(item => item.classList.remove("size-item__active"));
         e.target.classList.add("size-item__active");
-        setSize(e.target.name);
+        dispatch(changeSelectPizza({size: e.target.name, dough}));
     };
 
     const handleDoughChange = (e) => {
@@ -23,12 +32,12 @@ const InsideSelect = () => {
 
         arrDough.forEach(item => item.classList.remove("dough-item__active"));
         e.target.classList.add("dough-item__active");
-        setDough(e.target.name);
+        dispatch(changeSelectPizza({size, dough: e.target.name}));
 
         if (size === "25" && e.target.name === "thin") {
             ref25.current.classList.remove("size-item__active");
             ref30.current.classList.add("size-item__active");
-            setSize("30");
+            dispatch(changeSelectPizza({size: "30", dough: "thin"}));
         }
     };
 

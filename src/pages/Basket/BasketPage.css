@@ -1,0 +1,6 @@
+.basket-wrapper{
+    margin-top: 150px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}

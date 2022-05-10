@@ -20,6 +20,7 @@ const SnacksPage = ({head}) => {
 
         return <ExternalCard key={item.id} 
                 Inside={InsideCard}
+                pageName="snacks"
                 {...item}
                 weight={`${item.weight} грамм`}
                 btnName="В корзину" />

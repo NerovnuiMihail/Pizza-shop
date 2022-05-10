@@ -19,6 +19,7 @@ const DrinksPage = ({head}) => {
 
         return <ExternalCard key={item.id} 
                 Inside={InsideCard}
+                pageName="drinks"
                 {...item}
                 weight={`${item.weight} литра`}
                 btnName="В корзину" />
