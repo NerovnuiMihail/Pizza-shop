@@ -42,6 +42,7 @@ const InsideCard = ({setIsVisible, calories, id, img, name, weight, description,
     const handleAddItemInBasket = () => {
         const basketItem = {
             id: id,
+            img,
             name: name,
             weight: weight,
             cost: price,
@@ -62,8 +63,6 @@ const InsideCard = ({setIsVisible, calories, id, img, name, weight, description,
             default:
                 break;
         }
-
-        // добавить отправку на сервер
 
         hidePortal();
         // добавить информирование о добавлении в корзину

@@ -50,6 +50,7 @@ const InsideHardCard = ({setIsVisible, id, price, dough, img: {thin,traditional}
     const handleAddItemInBasket = () => {
         const basketItem = {
             id: id,
+            img: {thin, traditional},
             name: name,
             weight: dough[rDough].weight[rSize],
             size: rSize,
@@ -61,7 +62,6 @@ const InsideHardCard = ({setIsVisible, id, price, dough, img: {thin,traditional}
 
         dispatch(addNewPizzaItem(addFiltredPizzaToBasket(basket, basketItem)));
         dispatch(ChangeSelectExtra([]));
-        // добавить отправку на сервер
 
         hidePortal();
         // добавить информирование о добавлении в корзину

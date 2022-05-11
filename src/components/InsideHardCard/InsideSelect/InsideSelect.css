@@ -1,5 +1,5 @@
 .inside-select{
-    width: 450px;
+    width: 480px;
     display: flex;
     flex-direction: column;
 }
@@ -17,7 +17,7 @@
     font-size: 15px;
     cursor: pointer;
     height: 27px;
-    width: 143px;
+    width: 150px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -42,7 +42,7 @@
     font-size: 15px;
     cursor: pointer;
     height: 27px;
-    width: 219px;
+    width: 234px;
     display: flex;
     align-items: center;
     justify-content: center;
