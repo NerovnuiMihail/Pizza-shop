@@ -33,34 +33,20 @@ const BasketPage = () => {
         return pizzaCost + dessertCost + drinksCost + snacksCost;
     }
 
+    const handleDeleteBasketAllItems = (oldData, newData) => {
+        const filtredOldData = oldData.filter(item => item.key !== newData.key);
+        switchDeleteBasket(newData, filtredOldData);
+    };
+
     const handleDeleteBasketItem = (oldData, newData) => {
         const counter = newData.count - 1;
         const filtredOldData = oldData.filter(item => item.key !== newData.key);
         const currentData = {...newData, count: counter};
 
         if (counter === 0) {
-            switch (newData.pageName) {
-                case "pizza":
-                    dispatch(addNewPizzaItem(filtredOldData));
-                    break;
-                case "dessert":
-                    dispatch(addNewDessertItem(filtredOldData));
-                    break;
-                case "drinks":
-                    dispatch(addNewDrinksItem(filtredOldData));
-                    break;
-                case "snacks":
-                    dispatch(addNewSnacksItem(filtredOldData));
-                    break;
-                case "combos":
-                    dispatch(addNewCombosItem(filtredOldData));
-                    break;
-            
-                default:
-                    break;
-            }
+            switchDeleteBasket(newData, filtredOldData);
         } else {
-            switchBasket(newData, filtredOldData, currentData);
+            switchAddBasket(newData, filtredOldData, currentData);
         }
     };
 
@@ -69,10 +55,33 @@ const BasketPage = () => {
         const filtredOldData = oldData.filter(item => item.key !== newData.key);
         const currentData = {...newData, count: counter};
 
-        switchBasket(newData, filtredOldData, currentData);
+        switchAddBasket(newData, filtredOldData, currentData);
     };
 
-    const switchBasket = (newData, filtredOldData, currentData) => {
+    const switchDeleteBasket = (newData, filtredOldData) => {
+        switch (newData.pageName) {
+            case "pizza":
+                dispatch(addNewPizzaItem(filtredOldData));
+                break;
+            case "dessert":
+                dispatch(addNewDessertItem(filtredOldData));
+                break;
+            case "drinks":
+                dispatch(addNewDrinksItem(filtredOldData));
+                break;
+            case "snacks":
+                dispatch(addNewSnacksItem(filtredOldData));
+                break;
+            case "combos":
+                dispatch(addNewCombosItem(filtredOldData));
+                break;
+        
+            default:
+                break;
+        }
+    };
+
+    const switchAddBasket = (newData, filtredOldData, currentData) => {
         switch (newData.pageName) {
             case "pizza":
                 dispatch(addNewPizzaItem([...filtredOldData, currentData]));
@@ -123,10 +132,11 @@ const BasketPage = () => {
 
     const BasketContent = [pizzaItems,snacksItems,drinksItems,dessertItems].map(itemArr => !itemArr ? null : 
         itemArr.map(itemBasket => <BasketItem 
-                key={itemBasket.key} 
-                {...itemBasket} 
-                handleDeleteBasketItem={() => handleDeleteBasketItem(itemArr, itemBasket)}
-                handleAddBasketItem={() => handleAddBasketItem(itemArr, itemBasket)} />
+                    key={itemBasket.key} 
+                    {...itemBasket} 
+                    handleDeleteBasketAllItems={() => handleDeleteBasketAllItems(itemArr, itemBasket)}
+                    handleDeleteBasketItem={() => handleDeleteBasketItem(itemArr, itemBasket)}
+                    handleAddBasketItem={() => handleAddBasketItem(itemArr, itemBasket)} />
                 ));
 
     return (
