@@ -46,18 +46,23 @@ const BasketPage = () => {
         dispatch(setCostExtra(0));
     };
 
-    const BasketPlaceHolder = pizzaItems.length || 
-                              snacksItems.length || 
-                              drinksItems.length || 
-                              dessertItems.length > 0 ? null : <div className="basketplaceholder">
-                                                                    <h2 className="basketplaceholder__title">Корзина пуста...</h2>
-                                                                    <div className="basketplaceholder__imgs">
-                                                                        <img src={pizzaImg} alt="pizza" />
-                                                                        <img src={snacksImg} alt="snacks" />
-                                                                        <img src={drinksImg} alt="drinks" />
-                                                                        <img src={dessertsImg} alt="desserts" />
-                                                                    </div>
-                                                                </div>
+    const visibleContent = () => {
+        return pizzaItems.length || snacksItems.length || drinksItems.length || dessertItems.length > 0
+    }
+
+    const BasketMinimalCost = !visibleContent() ? null : (<div className="basket-minimal-cost">Минимальная сумма заказа 649 &#x20bd;</div>);
+    const BasketPlaceHolder = visibleContent() ? null : (<div className="basketplaceholder">
+                                                            <h2 className="basketplaceholder__title">Корзина пуста...</h2>
+                                                            <div className="basketplaceholder__imgs">
+                                                                <img src={pizzaImg} alt="pizza" />
+                                                                <img src={snacksImg} alt="snacks" />
+                                                                <img src={drinksImg} alt="drinks" />
+                                                                <img src={dessertsImg} alt="desserts" />
+                                                            </div>
+                                                            <h2 className="basketplaceholder__title">Мы доставим ваш заказ от 649 ₽</h2>
+                                                        </div>);
+
+    const BasketContent = [pizzaItems,snacksItems,drinksItems,dessertItems].map(itemArr => !itemArr ? null : itemArr.map(itemBasket => <BasketItem key={itemBasket.key} {...itemBasket} />));
 
     return (
         <div className="basket-wrapper">
@@ -78,35 +83,19 @@ const BasketPage = () => {
 
             {BasketPlaceHolder}
 
-            {!pizzaItems ? null : pizzaItems.map(item => {
-                return (
-                    <BasketItem key={item.key} {...item} />
-                );
-            })}
+            {BasketContent}
 
-            {!snacksItems ? null : snacksItems.map(item => {
-                return (
-                    <BasketItem key={item.key} {...item} />
-                );
-            })}
-
-            {!drinksItems ? null : drinksItems.map(item => {
-                return (
-                    <BasketItem key={item.key} {...item} />
-                );
-            })}
-
-            {!dessertItems ? null : dessertItems.map(item => {
-                return (
-                    <BasketItem key={item.key} {...item} />
-                );
-            })}
+            {calculateTotalCost() > 649 ? null : BasketMinimalCost}
 
             <div className="basket-info">
-                <div onClick={handleClearBasket} className="basket-clear-btn">Очистить корзину</div>
+                <button 
+                    onClick={handleClearBasket} 
+                    className="basket-clear-btn">Очистить корзину</button>
                 <div className="basket-total-cost">Сумма заказа: {calculateTotalCost()} &#x20bd;</div>
             </div>
-            <div className="basket-next-page">Перейти к оформлению</div>
+            <button 
+                disabled={calculateTotalCost() > 649 ? false : true} 
+                className="basket-next-page">Перейти к оформлению</button>
         </div>
     );
 }
