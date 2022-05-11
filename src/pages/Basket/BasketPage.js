@@ -18,11 +18,17 @@ import './BasketPage.css';
 
 const BasketPage = () => {
     const pizzaItems = useSelector(state => state.basket.basket.pizza);
-        // const combosItems = useSelector(state => state.basket.basket.combos);
+    const combosItems = useSelector(state => state.basket.basket.combos);
     const snacksItems = useSelector(state => state.basket.basket.snacks);
     const drinksItems = useSelector(state => state.basket.basket.drinks);
     const dessertItems = useSelector(state => state.basket.basket.dessert);
     const dispatch = useDispatch();
+
+    const sortedPizza = pizzaItems.slice().sort((a,b) => a.num - b.num);
+    const sortedCombos = combosItems.slice().sort((a,b) => a.num - b.num);
+    const sortedSnacks = snacksItems.slice().sort((a,b) => a.num - b.num);
+    const sortedDrinks = drinksItems.slice().sort((a,b) => a.num - b.num);
+    const sortedDessert = dessertItems.slice().sort((a,b) => a.num - b.num);
 
     const calculateTotalCost = () => {
         const pizzaCost = pizzaItems.reduce((prev, current) => prev + (+current.cost * +current.count), 0);
@@ -130,7 +136,7 @@ const BasketPage = () => {
                                                             <h2 className="basketplaceholder__title">Мы доставим ваш заказ от 649 ₽</h2>
                                                         </div>);
 
-    const BasketContent = [pizzaItems,snacksItems,drinksItems,dessertItems].map(itemArr => !itemArr ? null : 
+    const BasketContent = [sortedPizza, sortedCombos, sortedSnacks, sortedDrinks, sortedDessert].map(itemArr => !itemArr ? null : 
         itemArr.map(itemBasket => <BasketItem 
                     key={itemBasket.key} 
                     {...itemBasket} 

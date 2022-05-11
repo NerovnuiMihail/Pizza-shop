@@ -5,6 +5,7 @@ import CaloriesCard from '../CaloriesCard/CaloriesCard';
 import InsideSelect from './InsideSelect/InsideSelect';
 import ExtraSelect from './extraSelect/ExtraSelect';
 import addFiltredPizzaToBasket from '../../services/addFiltredPizzaToBasket';
+import useNum from '../../services/useNum';
 import info from './info.png';
 import close from './close.png';
 
@@ -16,8 +17,9 @@ const InsideHardCard = ({setIsVisible, id, pageName, price, dough, img: {thin,tr
     const basket = useSelector(state => state.basket.basket.pizza);
     const costExtra = useSelector(state => state.basket.basket.costExtra);
     const selectExtra = useSelector(state => state.basket.basket.selectExtra);
-    const dispatch = useDispatch();
     const {dough: rDough, size: rSize} = useSelector(state => state.shop.selectPizza);
+    const dispatch = useDispatch();
+    const [someNum] = useNum(pageName);
     const descr = description.slice().split(',').join(', ').toLowerCase();
 
     useEffect(() => {
@@ -58,7 +60,8 @@ const InsideHardCard = ({setIsVisible, id, pageName, price, dough, img: {thin,tr
             extra: [...selectExtra],
             cost: costExtra,
             count: 1,
-            pageName
+            pageName,
+            num: someNum() + 1
         };
 
         dispatch(addNewPizzaItem(addFiltredPizzaToBasket(basket, basketItem)));

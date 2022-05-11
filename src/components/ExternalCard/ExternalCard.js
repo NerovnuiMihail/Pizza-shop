@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addNewDessertItem, addNewDrinksItem, addNewSnacksItem } from '../../store/basketSlice';
 import addItemWithFilterToBasket from '../../services/addItemWithFilterToBasket';
+import useNum from '../../services/useNum';
 import Portal from '../Portal/Portal';
 
 import './ExternalCard.css';
@@ -11,6 +12,7 @@ const ExternalCard = ({img, image, price, cost, name, description, btnName, Insi
     const [isVisible, setIsVisible] = useState(false);
     const basket = useSelector(state => state.basket.basket[pageName]);
     const dispatch = useDispatch();
+    const [someNum] = useNum(pageName);
 
     const handleClick = (e) => {
         if (e.target.localName !== 'button' || btnName === "Выбрать") {
@@ -21,7 +23,7 @@ const ExternalCard = ({img, image, price, cost, name, description, btnName, Insi
         }
     }
 
-    const handleAddItemInBasket = () => {
+        const handleAddItemInBasket = () => {
         const basketItem = {
             id: id,
             img,
@@ -29,7 +31,8 @@ const ExternalCard = ({img, image, price, cost, name, description, btnName, Insi
             weight: weight,
             cost: price,
             count: 1,
-            pageName
+            pageName,
+            num: someNum() + 1
         };
 
         switch (pageName) {

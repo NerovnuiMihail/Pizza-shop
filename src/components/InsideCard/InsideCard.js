@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addNewDessertItem, addNewDrinksItem, addNewSnacksItem } from '../../store/basketSlice';
 import CaloriesCard from '../CaloriesCard/CaloriesCard';
 import addItemWithFilterToBasket from '../../services/addItemWithFilterToBasket';
+import useNum from '../../services/useNum';
 import info from './info.png';
 import close from './close.png';
 
@@ -12,6 +13,7 @@ const InsideCard = ({setIsVisible, calories, id, img, name, weight, description,
     const [hideCalories, setHideCalories] = useState(true);
     const basket = useSelector(state => state.basket.basket[pageName]);
     const dispatch = useDispatch();
+    const [someNum] = useNum(pageName);
 
     useEffect(() => {
         document.body.addEventListener('click', handleClick);
@@ -46,7 +48,8 @@ const InsideCard = ({setIsVisible, calories, id, img, name, weight, description,
             name: name,
             weight: weight,
             cost: price,
-            count: 1
+            count: 1,
+            num: someNum() + 1
         };
 
         switch (pageName) {
