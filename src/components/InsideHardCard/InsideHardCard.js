@@ -11,7 +11,7 @@ import close from './close.png';
 import './InsideHardCard.css';
 
 
-const InsideHardCard = ({setIsVisible, id, price, dough, img: {thin,traditional}, name, calories, description}) => {
+const InsideHardCard = ({setIsVisible, id, pageName, price, dough, img: {thin,traditional}, name, calories, description}) => {
     const [hideCalories, setHideCalories] = useState(true);
     const basket = useSelector(state => state.basket.basket.pizza);
     const costExtra = useSelector(state => state.basket.basket.costExtra);
@@ -57,7 +57,8 @@ const InsideHardCard = ({setIsVisible, id, price, dough, img: {thin,traditional}
             dough: rDough,
             extra: [...selectExtra],
             cost: costExtra,
-            count: 1
+            count: 1,
+            pageName
         };
 
         dispatch(addNewPizzaItem(addFiltredPizzaToBasket(basket, basketItem)));

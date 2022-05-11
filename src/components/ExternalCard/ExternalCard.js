@@ -28,7 +28,8 @@ const ExternalCard = ({img, image, price, cost, name, description, btnName, Insi
             name: name,
             weight: weight,
             cost: price,
-            count: 1
+            count: 1,
+            pageName
         };
 
         switch (pageName) {
@@ -45,8 +46,6 @@ const ExternalCard = ({img, image, price, cost, name, description, btnName, Insi
             default:
                 break;
         }
-
-        // добавить отправку на сервер
 
         // добавить информирование о добавлении в корзину
     }

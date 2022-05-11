@@ -1,5 +1,5 @@
 .basket-wrapper{
-    margin-top: 150px;
+    margin-top: 110px;
     height: auto;
     display: flex;
     flex-direction: column;
@@ -75,7 +75,6 @@
 .status-descr__text:nth-child(2){
     margin-left: 50px;
 }
-
 .basket-item{
     width: 1000px;
     height: 180px;
@@ -104,7 +103,8 @@
     font-size: 22px;
     font-weight: 600;
     border-radius: 25px;
-    background-color: rgb(255, 227, 208);
+    background-color: rgb(255, 105, 0);
+    color: white;
 }
 .basket-total-cost{
     font-size: 22px;

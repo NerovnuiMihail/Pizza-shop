@@ -33,8 +33,67 @@ const BasketPage = () => {
         return pizzaCost + dessertCost + drinksCost + snacksCost;
     }
 
-    // const handleDeleteBasketItem = () => {};
-    // const handleAddBasketItem = () => {};
+    const handleDeleteBasketItem = (oldData, newData) => {
+        const counter = newData.count - 1;
+        const filtredOldData = oldData.filter(item => item.key !== newData.key);
+        const currentData = {...newData, count: counter};
+
+        if (counter === 0) {
+            switch (newData.pageName) {
+                case "pizza":
+                    dispatch(addNewPizzaItem(filtredOldData));
+                    break;
+                case "dessert":
+                    dispatch(addNewDessertItem(filtredOldData));
+                    break;
+                case "drinks":
+                    dispatch(addNewDrinksItem(filtredOldData));
+                    break;
+                case "snacks":
+                    dispatch(addNewSnacksItem(filtredOldData));
+                    break;
+                case "combos":
+                    dispatch(addNewCombosItem(filtredOldData));
+                    break;
+            
+                default:
+                    break;
+            }
+        } else {
+            switchBasket(newData, filtredOldData, currentData);
+        }
+    };
+
+    const handleAddBasketItem = (oldData, newData) => {
+        const counter = newData.count + 1;
+        const filtredOldData = oldData.filter(item => item.key !== newData.key);
+        const currentData = {...newData, count: counter};
+
+        switchBasket(newData, filtredOldData, currentData);
+    };
+
+    const switchBasket = (newData, filtredOldData, currentData) => {
+        switch (newData.pageName) {
+            case "pizza":
+                dispatch(addNewPizzaItem([...filtredOldData, currentData]));
+                break;
+            case "dessert":
+                dispatch(addNewDessertItem([...filtredOldData, currentData]));
+                break;
+            case "drinks":
+                dispatch(addNewDrinksItem([...filtredOldData, currentData]));
+                break;
+            case "snacks":
+                dispatch(addNewSnacksItem([...filtredOldData, currentData]));
+                break;
+            case "combos":
+                dispatch(addNewCombosItem([...filtredOldData, currentData]));
+                break;
+        
+            default:
+                break;
+        }
+    };
 
     const handleClearBasket = () => {
         dispatch(addNewPizzaItem([]));
@@ -62,7 +121,13 @@ const BasketPage = () => {
                                                             <h2 className="basketplaceholder__title">Мы доставим ваш заказ от 649 ₽</h2>
                                                         </div>);
 
-    const BasketContent = [pizzaItems,snacksItems,drinksItems,dessertItems].map(itemArr => !itemArr ? null : itemArr.map(itemBasket => <BasketItem key={itemBasket.key} {...itemBasket} />));
+    const BasketContent = [pizzaItems,snacksItems,drinksItems,dessertItems].map(itemArr => !itemArr ? null : 
+        itemArr.map(itemBasket => <BasketItem 
+                key={itemBasket.key} 
+                {...itemBasket} 
+                handleDeleteBasketItem={() => handleDeleteBasketItem(itemArr, itemBasket)}
+                handleAddBasketItem={() => handleAddBasketItem(itemArr, itemBasket)} />
+                ));
 
     return (
         <div className="basket-wrapper">
@@ -90,6 +155,7 @@ const BasketPage = () => {
             <div className="basket-info">
                 <button 
                     onClick={handleClearBasket} 
+                    disabled={calculateTotalCost() !== 0 ? false : true} 
                     className="basket-clear-btn">Очистить корзину</button>
                 <div className="basket-total-cost">Сумма заказа: {calculateTotalCost()} &#x20bd;</div>
             </div>

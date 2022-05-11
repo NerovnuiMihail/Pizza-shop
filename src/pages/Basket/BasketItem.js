@@ -2,7 +2,7 @@ import close from './img/close.png';
 
 import './BasketPage.css';
 
-const BasketItem = ({ id, name, dough, img, cost, count, extra}) => {
+const BasketItem = ({ id, name, dough, img, cost, count, extra, handleAddBasketItem, handleDeleteBasketItem}) => {
     return (
         <div className="basket-item">
             <img src={typeof img === "string" ? img : img[dough]} alt={name} className="basket-item__img" />
@@ -18,9 +18,9 @@ const BasketItem = ({ id, name, dough, img, cost, count, extra}) => {
                                 </div>}
             </div>
             <div className="basket-item__btns">
-                <div className="basket-item__btns-left"> + </div>
+                <div onClick={handleAddBasketItem} className="basket-item__btns-left"> + </div>
                 <div className="basket-item__btns-count"> {count} </div>
-                <div className="basket-item__btns-right"> - </div>
+                <div onClick={handleDeleteBasketItem} className="basket-item__btns-right"> - </div>
             </div>
             <div className="basket-item__costs"> {+cost * count} &#x20bd;</div>
             <img src={close} alt="close" className="basket-item__remove" />

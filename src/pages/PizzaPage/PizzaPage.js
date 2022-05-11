@@ -23,6 +23,7 @@ const PizzaPage = ({head}) => {
         return <ExternalCard key={item.id} 
                 Inside={InsideHardCard}
                 {...item}
+                pageName="pizza"
                 image={image} 
                 description={description} 
                 cost={`от ${cost}`} 
