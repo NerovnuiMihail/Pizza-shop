@@ -197,3 +197,6 @@
 .basket-clear-btn:disabled{
     background-color: rgb(156, 154, 151);
 }
+.basket-next-page:disabled{
+    background-color: rgb(156, 154, 151);
+}

@@ -1,9 +1,20 @@
 import { useState, useRef } from 'react';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { v4 } from 'uuid';
 
 
 import './BasketRegistration.css';
 
 const BasketRegistration = () => {
+    const pizzaItems = useSelector(state => state.basket.basket.pizza);
+    const combosItems = useSelector(state => state.basket.basket.combos);
+    const snacksItems = useSelector(state => state.basket.basket.snacks);
+    const drinksItems = useSelector(state => state.basket.basket.drinks);
+    const dessertItems = useSelector(state => state.basket.basket.dessert);
+
+    // const [sendStatus, setSendStatus] = useState(null);
+
     const [isDelivery, setIsDelivery] = useState(true);
     const [isPickup, setIsPickup] = useState(false);
     const refDelivery = useRef(null);
@@ -24,6 +35,16 @@ const BasketRegistration = () => {
     const [cityP, setCityP] = useState("");
     const [restaurantP, setRestaurantP] = useState("");
     const [commentsP, setCommentsP] = useState("");
+
+    const [deliveryCash, setDeliveryCash] = useState(false);
+    const [deliveryCard, setDeliveryCard] = useState(true);
+    const [pickupCash, setPickupCash] = useState(false);
+    const [pickupCard, setPickupCard] = useState(true);
+
+    const refdeliveryCash = useRef(null);
+    const refdeliveryCard = useRef(null);
+    const refpickupCash = useRef(null);
+    const refpickupCard = useRef(null);
 
     const handleSwitchMethodDelivery = (e) => {
         switch (e.target.textContent) {
@@ -49,6 +70,158 @@ const BasketRegistration = () => {
                 break;
         }
     };
+
+    const handleChangeRadioMethodDelivery = () => {
+        setDeliveryCash(deliveryCash => !deliveryCash);
+        setDeliveryCard(deliveryCard => !deliveryCard);
+    };
+
+    const handleChangeRadioMethodPickup = () => {
+        setPickupCash(pickupCash => !pickupCash);
+        setPickupCard(pickupCard => !pickupCard);
+    };
+
+    const calculateTotalCost = () => {
+        const pizzaCost = pizzaItems.reduce((prev, current) => prev + (+current.cost * +current.count), 0);
+        const snacksCost = snacksItems.reduce((prev, current) => prev + (+current.cost * +current.count), 0);
+        const drinksCost = drinksItems.reduce((prev, current) => prev + (+current.cost * +current.count), 0);
+        const dessertCost = dessertItems.reduce((prev, current) => prev + (+current.cost * +current.count), 0);
+
+        return pizzaCost + dessertCost + drinksCost + snacksCost;
+    }
+
+    const sendBasketAndBuyerToBD = async () => {
+        const currentBasket = {};
+        let happyBuyer;
+
+        if (pizzaItems.length > 0) {
+            const newBasket = pizzaItems.map(item => {
+                return {
+                    id: item.id,
+                    name: item.name,
+                    size: item.size,
+                    dough: item.dough,
+                    extra: item.extra,
+                    cost: item.cost,
+                    count: item.count
+                }
+            });
+
+            currentBasket.pizza = newBasket;
+        }
+        if (combosItems.length > 0) {
+            const newBasket = combosItems.map(item => {
+                return {
+                    id: item.id,
+                    name: item.name,
+                    extra: item.extra,
+                    cost: item.cost,
+                    count: item.count
+                }
+            });
+
+            currentBasket.combos = newBasket;
+        }
+        if (snacksItems.length > 0) {
+            const newBasket = snacksItems.map(item => {
+                return {
+                    id: item.id,
+                    name: item.name,
+                    cost: item.cost,
+                    count: item.count
+                }
+            });
+
+            currentBasket.snacks = newBasket;
+        }
+        if (drinksItems.length > 0) {
+            const newBasket = drinksItems.map(item => {
+                return {
+                    id: item.id,
+                    name: item.name,
+                    cost: item.cost,
+                    count: item.count
+                }
+            });
+
+            currentBasket.drinks = newBasket;
+        }
+        if (dessertItems.length > 0) {
+            const newBasket = dessertItems.map(item => {
+                return {
+                    id: item.id,
+                    name: item.name,
+                    cost: item.cost,
+                    count: item.count
+                }
+            });
+
+            currentBasket.dessert = newBasket;
+        }
+        
+        if (isDelivery) {
+            happyBuyer = {
+                name: nameD,
+                phone: telD,
+                city: cityD,
+                restaurant: "",
+                street: streetD,
+                house: houseD,
+                room: roomD,
+                entrance: entranceD,
+                floor: floorD,
+                comments: commentsD,
+                payment: deliveryCash ? "Оплата наличными курьеру" : "Оплата картой курьеру",
+                totalCost: calculateTotalCost()
+            };
+        } else {
+            happyBuyer = {
+                name: nameP,
+                phone: telP,
+                city: cityP,
+                restaurant: restaurantP,
+                street: "",
+                house: "",
+                room: "",
+                entrance: "",
+                floor: "",
+                comments: commentsP,
+                payment:  pickupCash ? "Оплата наличными при получении" : "Оплата картой при получении",
+                totalCost: calculateTotalCost()
+            };
+        }
+
+        const send = {
+            id: v4(),
+            happyBuyer,
+            currentBasket
+        }
+
+        try {
+            const response = await fetch(URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json;utf=8"
+                },
+                body: JSON.stringify(send)
+            });
+
+            if (response.ok) {
+                console.log('Успешно отправлено!');
+
+                console.log(send);
+            } else {
+                throw new Error('Ошибка при отправке!');
+            }
+            
+        } catch (error) {
+            console.log(error);
+
+            console.log(send);
+        }
+    };
+
+    // console.log('render');
 
     return (
         <div className="basket-registration-wrapper">
@@ -77,7 +250,7 @@ const BasketRegistration = () => {
                         ref={refPickup}
                         onClick={handleSwitchMethodDelivery}
                         className="form-wrapper__titles-item">Самовывоз</div>
-                    {isDelivery ? null : <div className="form-wrapper__titles-hide-item">При самовывозе - скидка!</div>}
+                    {isDelivery ? null : <div className="form-wrapper__titles-hide-item">При самовывозе - скидка!    <span> 10% </span></div>}
                 </div>
 
                 {isPickup ? null : (
@@ -158,25 +331,25 @@ const BasketRegistration = () => {
                         <form name="form-wrapper__pickup" className="form-pickup">
                             <fieldset>
                                 <input 
-                                onChange={(e) => setTextP(e.target.value)} 
-                                value={nameP} 
-                                type="text" 
-                                className="custom-inp" 
-                                placeholder="Имя"/>
+                                    onChange={(e) => setTextP(e.target.value)} 
+                                    value={nameP} 
+                                    type="text" 
+                                    className="custom-inp" 
+                                    placeholder="Имя"/>
                                 <input 
-                                onChange={(e) => setTelP(e.target.value)} 
-                                value={telP} 
-                                type="tel" 
-                                className="custom-inp" 
-                                placeholder="Телефон"/>
+                                    onChange={(e) => setTelP(e.target.value)} 
+                                    value={telP} 
+                                    type="tel" 
+                                    className="custom-inp" 
+                                    placeholder="Телефон"/>
                             </fieldset>
     
                             <fieldset>
                                 <select 
-                                onChange={(e) => setCityP(e.target.value)} 
-                                value={cityP} 
-                                name="city" 
-                                className="custom-select" >
+                                    onChange={(e) => setCityP(e.target.value)} 
+                                    value={cityP} 
+                                    name="city" 
+                                    className="custom-select" >
                                     <option value="default" className="custom-option">Выберите город</option>
                                     <option value="voronezh" className="custom-option">Воронеж</option>
                                 </select>
@@ -192,11 +365,11 @@ const BasketRegistration = () => {
                             </fieldset>
     
                             <textarea 
-                            onChange={(e) => setCommentsP(e.target.value)} 
-                            value={commentsP} 
-                            name="comments" cols="30" rows="10" 
-                            className="custom-textarea" 
-                            placeholder="Комментарии"></textarea>
+                                onChange={(e) => setCommentsP(e.target.value)} 
+                                value={commentsP} 
+                                name="comments" cols="30" rows="10" 
+                                className="custom-textarea" 
+                                placeholder="Комментарии"></textarea>
                         </form>
                     </div>
                 )}
@@ -206,6 +379,9 @@ const BasketRegistration = () => {
                 {isPickup ? null : (
                     <div className="payment-delivery">
                         <input 
+                            onChange={handleChangeRadioMethodDelivery}
+                            checked={deliveryCash}
+                            ref={refdeliveryCash}
                             type="radio" 
                             id="radio1" 
                             name="delivery-payment" 
@@ -213,10 +389,12 @@ const BasketRegistration = () => {
                         <label htmlFor="radio1">Оплата наличными курьеру</label>
     
                         <input 
+                            onChange={handleChangeRadioMethodDelivery}
+                            checked={deliveryCard}
+                            ref={refdeliveryCard}
                             type="radio" 
                             id="radio2" 
                             name="delivery-payment" 
-                            // checked 
                             value="card"/>
                         <label htmlFor="radio2">Оплата картой курьеру</label>
                     </div>
@@ -225,6 +403,9 @@ const BasketRegistration = () => {
                 {isDelivery ? null : (
                     <div className="payment-pickup">
                         <input 
+                            onChange={handleChangeRadioMethodPickup}
+                            checked={pickupCash}
+                            ref={refpickupCash}
                             type="radio" 
                             id="radio3" 
                             name="delivery-pickup"
@@ -232,19 +413,28 @@ const BasketRegistration = () => {
                         <label htmlFor="radio3">Оплата наличными при получении</label>
     
                         <input 
+                            onChange={handleChangeRadioMethodPickup}
+                            checked={pickupCard}
+                            ref={refpickupCard}
                             type="radio" 
                             id="radio4" 
-                            name="delivery-pickup" 
-                            // checked 
+                            name="delivery-pickup"
                             value="card"/>
                         <label htmlFor="radio4">Оплата картой при получении</label>
                     </div>
                 )}
             </div> 
 
+            {isDelivery ? <div className="basket-total-cost">Сумма заказа: {calculateTotalCost()} &#x20bd;</div> :
+             <div className="basket-total-cost">Сумма заказа: {Math.floor(calculateTotalCost()/100*90)} &#x20bd;</div> }
+
             <div className="form-wrapper__btns">
-                <button className="form-wrapper__btn-prev">Назад в корзину</button>
-                <button className="form-wrapper__btn-next">Оформить заказ</button>
+                <Link to="/basket">
+                    <button className="form-wrapper__btn-prev">Назад в корзину</button>
+                </Link>
+                <button 
+                    onClick={sendBasketAndBuyerToBD}
+                    className="form-wrapper__btn-next">Оформить заказ</button>
             </div>
         </div>
     );

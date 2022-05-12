@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import BasketItem from './BasketItem';
 import {
     addNewPizzaItem,
@@ -175,9 +176,12 @@ const BasketPage = () => {
                     className="basket-clear-btn">Очистить корзину</button>
                 <div className="basket-total-cost">Сумма заказа: {calculateTotalCost()} &#x20bd;</div>
             </div>
-            <button 
-                disabled={calculateTotalCost() > 649 ? false : true} 
-                className="basket-next-page">Перейти к оформлению</button>
+            
+            <Link to="/basketregistration">
+                <button 
+                    disabled={calculateTotalCost() > 649 ? false : true} 
+                    className="basket-next-page">Перейти к оформлению</button>
+            </Link>
         </div>
     );
 }

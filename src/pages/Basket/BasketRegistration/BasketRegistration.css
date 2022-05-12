@@ -38,7 +38,9 @@
     font-size: 16px;
     border: 3px dashed rgb(229, 188, 138);
 }
-
+.form-wrapper__titles-hide-item span{
+    color: tomato;
+}
 .form-wrapper__delivery{
     width: 800px;
 }
@@ -55,8 +57,6 @@
     box-shadow: 1px 1px 12px rgb(153, 149, 144);
     border-radius: 8px;
 }
-
-
 .form-wrapper__pickup{
     width: 100%;
 }
@@ -91,13 +91,11 @@ fieldset {
     border-radius: 8px;
     margin-bottom: 20px;
 }
-
-
 .form-wrapper__payment{
     width: 800px;
-    height: auto;
+    height: 70px;
     padding: 20px;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
 }
 .form-wrapper__payment label{
     height: 30px;
@@ -160,6 +158,7 @@ fieldset {
 
 
 .form-wrapper__btns{
+    margin-top: 60px;
     width: 800px;
     display: flex;
     align-items: center;
