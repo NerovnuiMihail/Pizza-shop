@@ -1,19 +1,25 @@
 import { useState, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { v4 } from 'uuid';
+import {     
+    addNewPizzaItem,
+    addNewDessertItem,
+    addNewDrinksItem,
+    addNewSnacksItem,
+    addNewCombosItem
+} from '../../../store/basketSlice';
 
 
 import './BasketRegistration.css';
 
 const BasketRegistration = () => {
+    const dispatch = useDispatch();
     const pizzaItems = useSelector(state => state.basket.basket.pizza);
     const combosItems = useSelector(state => state.basket.basket.combos);
     const snacksItems = useSelector(state => state.basket.basket.snacks);
     const drinksItems = useSelector(state => state.basket.basket.drinks);
     const dessertItems = useSelector(state => state.basket.basket.dessert);
-
-    // const [sendStatus, setSendStatus] = useState(null);
 
     const [isDelivery, setIsDelivery] = useState(true);
     const [isPickup, setIsPickup] = useState(false);
@@ -91,72 +97,76 @@ const BasketRegistration = () => {
     }
 
     const sendBasketAndBuyerToBD = async () => {
-        const currentBasket = {};
+        const URL = "http://localhost:3001/api/basket";
+        const currentBasket = [];
         let happyBuyer;
 
         if (pizzaItems.length > 0) {
             const newBasket = pizzaItems.map(item => {
                 return {
                     id: item.id,
+                    title: "pizza",
                     name: item.name,
                     size: item.size,
                     dough: item.dough,
-                    extra: item.extra,
                     cost: item.cost,
                     count: item.count
                 }
             });
 
-            currentBasket.pizza = newBasket;
+            currentBasket.push(...newBasket);
         }
         if (combosItems.length > 0) {
             const newBasket = combosItems.map(item => {
                 return {
                     id: item.id,
+                    title: "snacks",
                     name: item.name,
-                    extra: item.extra,
                     cost: item.cost,
                     count: item.count
                 }
             });
 
-            currentBasket.combos = newBasket;
+            currentBasket.push(...newBasket);
         }
         if (snacksItems.length > 0) {
             const newBasket = snacksItems.map(item => {
                 return {
                     id: item.id,
+                    title: "snacks",
                     name: item.name,
                     cost: item.cost,
                     count: item.count
                 }
             });
 
-            currentBasket.snacks = newBasket;
+            currentBasket.push(...newBasket);
         }
         if (drinksItems.length > 0) {
             const newBasket = drinksItems.map(item => {
                 return {
                     id: item.id,
+                    title: "drinks",
                     name: item.name,
                     cost: item.cost,
                     count: item.count
                 }
             });
 
-            currentBasket.drinks = newBasket;
+            currentBasket.push(...newBasket);
         }
         if (dessertItems.length > 0) {
             const newBasket = dessertItems.map(item => {
                 return {
                     id: item.id,
+                    title: "dessert",
                     name: item.name,
                     cost: item.cost,
                     count: item.count
                 }
             });
 
-            currentBasket.dessert = newBasket;
+            currentBasket.push(...newBasket)
         }
         
         if (isDelivery) {
@@ -187,7 +197,7 @@ const BasketRegistration = () => {
                 floor: "",
                 comments: commentsP,
                 payment:  pickupCash ? "Оплата наличными при получении" : "Оплата картой при получении",
-                totalCost: calculateTotalCost()
+                totalCost: Math.floor(calculateTotalCost()/100*90)
             };
         }
 
@@ -209,15 +219,17 @@ const BasketRegistration = () => {
             if (response.ok) {
                 console.log('Успешно отправлено!');
 
-                console.log(send);
+                dispatch(addNewPizzaItem([]));
+                dispatch(addNewDessertItem([]));
+                dispatch(addNewDrinksItem([]));
+                dispatch(addNewSnacksItem([]));
+                dispatch(addNewCombosItem([]));
             } else {
                 throw new Error('Ошибка при отправке!');
             }
             
         } catch (error) {
             console.log(error);
-
-            console.log(send);
         }
     };
 

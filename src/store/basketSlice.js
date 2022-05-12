@@ -10,8 +10,7 @@ const basketSlice = createSlice({
             snacks: [],
             combos: [],
             selectExtra: [],
-            costExtra: 0,
-            currentBasket: []
+            costExtra: 0
         }
     },
     reducers: {
@@ -35,9 +34,6 @@ const basketSlice = createSlice({
         },
         setCostExtra(state, action) {
             state.basket.costExtra = action.payload
-        },
-        createCurrentBasket(state, action) {
-            state.basket.currentBasket = action.payload
         }
     }
 });
@@ -49,7 +45,6 @@ export const {
     addNewSnacksItem,
     addNewCombosItem,
     ChangeSelectExtra,
-    setCostExtra,
-    createCurrentBasket
+    setCostExtra
 } = basketSlice.actions;
 export default basketSlice.reducer;
