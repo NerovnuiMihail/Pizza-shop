@@ -10,7 +10,8 @@ import {
     NotFoundPage,
     PizzaPage,
     SnacksPage,
-	BasketPage
+	BasketPage,
+	BasketRegistration
 } from "../../pages";
 
 
@@ -27,6 +28,7 @@ function App() {
 					<Route path="dessert" element={<DessertPage head />} />
 					<Route path="bonusactions" element={<BonusActionsPage/>} />
 					<Route path="basket" element={<BasketPage />} />
+					<Route path="basketregistration" element={<BasketRegistration />} />
 					<Route path="*" element={<NotFoundPage/>} />
 				</Route>
 			</Routes>

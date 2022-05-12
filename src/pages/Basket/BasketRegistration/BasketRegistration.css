@@ -1,26 +1,184 @@
-.basket-registration-wrapper{}
-.form-wrapper__titles{}
-.form-wrapper__titles-item{}
-.form-wrapper__titles-hide-item{}
+.basket-registration-wrapper{
+    margin-top: 110px;
+    width: 1000px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.form-wrapper__titles{
+    display: flex;
+    border-bottom: 2px solid rgb(255, 105, 0);
+    margin-bottom: 20px;
+}
+.form-wrapper__titles-item{
+    cursor: pointer;
+    margin-right: 10px;
+    padding: 10px;
+    min-width: 120px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(230, 216, 216);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    color: rgb(95, 93, 93);
+    font-size: 16px;
+}
+.titles-item-active {
+    background-color: rgb(255, 105, 0);
+    color: white;
+}
+.form-wrapper__titles-hide-item{
+    display: none;
+}
 
 
-.form-wrapper__delivery{}
-.custom-inp-place{}
+.form-wrapper__delivery{
+    width: 800px;
 
-.form-wrapper__pickup{}
-.form-pickup{}
-.custom-inp{}
-.custom-select{}
-.custom-option{}
-.custom-textarea{}
+    display: none;
+}
+.form-delivery{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+.custom-inp-place{
+    padding-left: 15px;
+    width: 170px;
+    height: 40px;
+    box-shadow: 1px 1px 12px rgb(153, 149, 144);
+    border-radius: 8px;
+}
 
 
-.form-wrapper__payment{}
+.form-wrapper__pickup{
+    width: 100%;
+}
+.form-pickup{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+fieldset {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.custom-inp, .custom-select{
+    padding-left: 15px;
+    width: 380px;
+    height: 40px;
+    box-shadow: 1px 1px 12px rgb(153, 149, 144);
+    border-radius: 8px;
+}
+.custom-select{
+    cursor: pointer;
+}
+.custom-textarea{
+    padding: 15px;
+    width: 800px;
+    height: 100px;
+    box-shadow: 1px 1px 12px rgb(153, 149, 144);
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
 
 
+.form-wrapper__payment{
+    width: 800px;
+    height: auto;
+    padding: 20px;
+    margin-bottom: 50px;
+}
+.form-wrapper__payment label{
+    height: 30px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+}
+.form-wrapper__payment label:not(:last-child){
+    margin-bottom: 20px;
+}
+.payment-delivery{
+    display: none;
 
-.form-wrapper__btns{}
-.form-wrapper__btn-prev{}
-.form-wrapper__btn-next{}
+    /* display: flex; */
+    flex-direction: column;
+}
+
+.payment-delivery input {
+    display: none;
+}
+.payment-delivery label {
+    width: 350px;
+    height: 35px;
+    font-size: 18px;
+    display: flex;
+    padding: 2px 9px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 1px 1px 12px #e2b435;
+    border-radius: 12px;
+}
+.payment-delivery input[type="radio"]:checked+label {
+    background-color: #e2b435;
+    color: white;
+}
+
+
+.payment-pickup {
+    /* display: none; */
+
+    display: flex;
+    flex-direction: column;
+}
+.payment-pickup input {
+    display: none;
+}
+.payment-pickup label {
+    width: 350px;
+    height: 35px;
+    display: flex;
+    font-size: 18px;
+    padding: 2px 9px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 1px 1px 12px #e2b435;
+    border-radius: 12px;
+}
+.payment-pickup input[type="radio"]:checked+label {
+    background-color: #e2b435;
+    color: white;
+}
+
+
+.form-wrapper__btns{
+    width: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.form-wrapper__btn-next, .form-wrapper__btn-prev{
+    cursor: pointer;
+    width: 240px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 600;
+    border-radius: 25px;
+    background-color: rgb(255, 105, 0);
+    color: white;
+}
 
 
