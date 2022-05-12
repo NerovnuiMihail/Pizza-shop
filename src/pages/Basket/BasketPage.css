@@ -194,6 +194,6 @@
     font-size: 18px;
     font-weight: 500;
 }
-button:disabled{
+.basket-clear-btn:disabled{
     background-color: rgb(156, 154, 151);
 }

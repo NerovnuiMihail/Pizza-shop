@@ -8,6 +8,7 @@
 }
 .form-wrapper__titles{
     display: flex;
+    align-items: center;
     border-bottom: 2px solid rgb(255, 105, 0);
     margin-bottom: 20px;
 }
@@ -31,14 +32,15 @@
     color: white;
 }
 .form-wrapper__titles-hide-item{
-    display: none;
+    margin-left: 60px;
+    font-weight: 600;
+    padding: 7px;
+    font-size: 16px;
+    border: 3px dashed rgb(229, 188, 138);
 }
-
 
 .form-wrapper__delivery{
     width: 800px;
-
-    display: none;
 }
 .form-delivery{
     width: 100%;
@@ -107,10 +109,8 @@ fieldset {
     margin-bottom: 20px;
 }
 .payment-delivery{
-    display: none;
-
-    /* display: flex; */
-    flex-direction: column;
+    display: flex;
+    justify-content: space-between;
 }
 
 .payment-delivery input {
@@ -125,7 +125,7 @@ fieldset {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    box-shadow: 1px 1px 12px #e2b435;
+    box-shadow: 1px 1px 12px rgb(153, 149, 144);
     border-radius: 12px;
 }
 .payment-delivery input[type="radio"]:checked+label {
@@ -135,10 +135,8 @@ fieldset {
 
 
 .payment-pickup {
-    /* display: none; */
-
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
 }
 .payment-pickup input {
     display: none;
@@ -152,7 +150,7 @@ fieldset {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    box-shadow: 1px 1px 12px #e2b435;
+    box-shadow: 1px 1px 12px rgb(153, 149, 144);
     border-radius: 12px;
 }
 .payment-pickup input[type="radio"]:checked+label {
