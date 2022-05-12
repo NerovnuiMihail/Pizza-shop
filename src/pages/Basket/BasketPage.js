@@ -157,7 +157,7 @@ const BasketPage = () => {
                 </div>
                 <div className="status-descr">
                     <div className="status-descr__text">Корзина</div>
-                    <div className="status-descr__text">Офрмление</div>
+                    <div className="status-descr__text">Оформление</div>
                     <div className="status-descr__text">Заказ оформлен</div>
                 </div>
             </div>
