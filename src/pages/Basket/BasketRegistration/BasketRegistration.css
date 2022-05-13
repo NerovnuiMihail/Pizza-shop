@@ -130,8 +130,6 @@ fieldset {
     background-color: #e2b435;
     color: white;
 }
-
-
 .payment-pickup {
     display: flex;
     justify-content: space-between;
@@ -155,8 +153,6 @@ fieldset {
     background-color: #e2b435;
     color: white;
 }
-
-
 .form-wrapper__btns{
     margin-top: 60px;
     width: 800px;
@@ -177,5 +173,18 @@ fieldset {
     background-color: rgb(255, 105, 0);
     color: white;
 }
-
-
+.form-wrapper__btn-next:disabled{
+    background-color: rgb(156, 154, 151);
+}
+.warning-mistake{
+    color: tomato;
+    margin-top: 5px;
+    margin-left: 15px;
+    font-size: 14px;
+    opacity: 0;
+}
+.somediv{
+    margin-top: 5px;
+    height: 14px;
+    opacity: 0;
+}

@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { v4 } from 'uuid';
@@ -15,11 +15,15 @@ import './BasketRegistration.css';
 
 const BasketRegistration = () => {
     const dispatch = useDispatch();
+    
     const pizzaItems = useSelector(state => state.basket.basket.pizza);
     const combosItems = useSelector(state => state.basket.basket.combos);
     const snacksItems = useSelector(state => state.basket.basket.snacks);
     const drinksItems = useSelector(state => state.basket.basket.drinks);
     const dessertItems = useSelector(state => state.basket.basket.dessert);
+
+    const [isNextPageDelivery, setIsNextPageDelivery] = useState(true);
+    const [isNextPagePickup, setIsNextPagePickup] = useState(true);
 
     const [isDelivery, setIsDelivery] = useState(true);
     const [isPickup, setIsPickup] = useState(false);
@@ -51,6 +55,21 @@ const BasketRegistration = () => {
     const refdeliveryCard = useRef(null);
     const refpickupCash = useRef(null);
     const refpickupCard = useRef(null);
+
+    const refcorrectlyNameD = useRef(null);
+    const refcorrectlyTelD = useRef(null);
+    const refcorrectlyCityD = useRef(null);
+    const refcorrectlyStreetD = useRef(null);
+    const refcorrectlyHouseD = useRef(null);
+
+    const refcorrectlyNameP = useRef(null);
+    const refcorrectlyTelP = useRef(null);
+    const refcorrectlyCityP = useRef(null);
+    const refcorrectlyRestaurantP = useRef(null);
+
+    useEffect(() => {
+        isCorrectlyInputs();
+    });
 
     const handleSwitchMethodDelivery = (e) => {
         switch (e.target.textContent) {
@@ -233,6 +252,94 @@ const BasketRegistration = () => {
         }
     };
 
+    const isCorrectlyInputs = () => {
+        if (isDelivery) {
+            let correctlyNameD = true;
+            let correctlyTelD = true;
+            let correctlyCityD = true;
+            let correctlyStreetD = true;
+            let correctlyHouseD = true;
+
+            //      warning-mistake
+
+            if (nameD.trim().length < 2) {
+                correctlyNameD = false;
+            }
+
+            if (telD.length < 10) {
+                correctlyTelD = false;
+            }
+
+            if (cityD === "") {
+                correctlyCityD = false;
+            }
+
+            if (streetD.trim().length < 5) {
+                correctlyStreetD = false;
+            }
+
+            if (houseD.trim().length < 1) {
+                correctlyHouseD = false;
+            }
+            
+            if ( correctlyNameD === false || correctlyTelD === false || correctlyCityD === false || correctlyStreetD === false || correctlyHouseD === false ) {
+                setIsNextPageDelivery(true);
+
+                correctlyNameD ? refcorrectlyNameD.current.style.opacity = 0 : refcorrectlyNameD.current.style.opacity = 1;
+                correctlyTelD ? refcorrectlyTelD.current.style.opacity = 0 : refcorrectlyTelD.current.style.opacity = 1;
+                correctlyCityD ? refcorrectlyCityD.current.style.opacity = 0 : refcorrectlyCityD.current.style.opacity = 1;
+                correctlyStreetD ? refcorrectlyStreetD.current.style.opacity = 0 : refcorrectlyStreetD.current.style.opacity = 1;
+                correctlyHouseD ? refcorrectlyHouseD.current.style.opacity = 0 : refcorrectlyHouseD.current.style.opacity = 1;
+            } else {
+                setIsNextPageDelivery(false);
+
+                refcorrectlyNameD.current.style.opacity = 0;
+                refcorrectlyTelD.current.style.opacity = 0;
+                refcorrectlyCityD.current.style.opacity = 0;
+                refcorrectlyStreetD.current.style.opacity = 0;
+                refcorrectlyHouseD.current.style.opacity = 0;
+            }
+
+        } else {
+            let correctlyNameP = true;
+            let correctlyTelP = true;
+            let correctlyCityP = true;
+            let correctlyRestaurantP = true;
+
+            if (nameP.trim().length < 2) {
+                correctlyNameP = false;
+            }
+
+            if (telP.length < 10) {
+                correctlyTelP = false;
+            }
+
+            if (cityP === "") {
+                correctlyCityP = false;
+            }
+
+            if (restaurantP === "") {
+                correctlyRestaurantP = false;
+            }
+
+            if  (correctlyNameP === false || correctlyTelP === false || correctlyCityP === false || correctlyRestaurantP === false ) {
+                setIsNextPagePickup(true);
+
+                correctlyNameP ? refcorrectlyNameP.current.style.opacity = 0 : refcorrectlyNameP.current.style.opacity = 1;
+                correctlyTelP ? refcorrectlyTelP.current.style.opacity = 0 : refcorrectlyTelP.current.style.opacity = 1;
+                correctlyCityP ? refcorrectlyCityP.current.style.opacity = 0 : refcorrectlyCityP.current.style.opacity = 1;
+                correctlyRestaurantP ? refcorrectlyRestaurantP.current.style.opacity = 0 : refcorrectlyRestaurantP.current.style.opacity = 1;
+            } else {
+                setIsNextPagePickup(false);
+
+                refcorrectlyNameP.current.style.opacity = 0;
+                refcorrectlyTelP.current.style.opacity = 0;
+                refcorrectlyCityP.current.style.opacity = 0;
+                refcorrectlyRestaurantP.current.style.opacity = 0;
+            }
+        }
+    };
+
     // console.log('render');
 
     return (
@@ -269,63 +376,86 @@ const BasketRegistration = () => {
                     <div className="form-wrapper__delivery">
                         <form name="form-wrapper__delivery" className="form-delivery">
                             <fieldset>
-                                <input 
-                                    onChange={(e) => setTextD(e.target.value)}
-                                    type="text" 
-                                    className="custom-inp" 
-                                    value={nameD} 
-                                    placeholder="Имя" />
-                                <input 
-                                    onChange={(e) => setTelD(e.target.value)}
-                                    type="tel" 
-                                    className="custom-inp" 
-                                    value={telD} 
-                                    placeholder="Телефон" />
+                                <div>
+                                    <input 
+                                        onChange={(e) => setTextD(e.target.value)}
+                                        type="text" 
+                                        className="custom-inp" 
+                                        value={nameD} 
+                                        placeholder="Имя" />
+                                    <div ref={refcorrectlyNameD} className="warning-mistake">Минимальное количество символов 2!</div>   
+                                </div>
+                                <div>
+                                    <input 
+                                        onChange={(e) => setTelD(e.target.value)}
+                                        type="number" 
+                                        className="custom-inp" 
+                                        value={telD} 
+                                        placeholder="Телефон" />
+                                    <div ref={refcorrectlyTelD} className="warning-mistake">Некорректный номер! (Пример:  960 111 22 33)</div> 
+                                </div>
                             </fieldset>
 
                             <fieldset>
-                                <select 
-                                    onChange={(e) => setCityD(e.target.value)} 
-                                    name="city" 
-                                    value={cityD} 
-                                    className="custom-select" >
-                                    <option value="default" className="custom-option">Выберите город</option>
-                                    <option value="voronezh" className="custom-option">Воронеж</option>
-                                </select>
-
-                                <input 
-                                    onChange={(e) => setStreetD(e.target.value)}
-                                    type="text" 
-                                    className="custom-inp" 
-                                    value={streetD} 
-                                    placeholder="Улица"/>
+                                <div>
+                                    <select 
+                                        onChange={(e) => setCityD(e.target.value)} 
+                                        name="city" 
+                                        value={cityD} 
+                                        className="custom-select" >
+                                        <option value="default" className="custom-option">Выберите город</option>
+                                        <option value="voronezh" className="custom-option">Воронеж</option>
+                                    </select>
+                                    <div ref={refcorrectlyCityD} className="warning-mistake">Необходимо выбрать город!</div> 
+                                </div>
+                                <div>
+                                    <input 
+                                        onChange={(e) => setStreetD(e.target.value)}
+                                        type="text" 
+                                        className="custom-inp" 
+                                        value={streetD} 
+                                        placeholder="Улица"/>
+                                    <div ref={refcorrectlyStreetD} className="warning-mistake">Минимальное количество символов 5!</div> 
+                                </div>
                             </fieldset>
 
                             <fieldset>
-                                <input 
-                                    onChange={(e) => setHouseD(e.target.value)}
-                                    type="text" 
-                                    className="custom-inp-place" 
-                                    value={houseD} 
-                                    placeholder="Дом"/>
-                                <input 
-                                    onChange={(e) => setRoomD(e.target.value)}
-                                    type="text" 
-                                    className="custom-inp-place" 
-                                    value={roomD} 
-                                    placeholder="Квартира"/>
-                                <input 
-                                    onChange={(e) => setEntranceD(e.target.value)}
-                                    type="text" 
-                                    className="custom-inp-place" 
-                                    value={entranceD} 
-                                    placeholder="Подъезд"/>
-                                <input
-                                    onChange={(e) => setFloorD(e.target.value)} 
-                                    type="text" 
-                                    className="custom-inp-place" 
-                                    value={floorD} 
-                                    placeholder="Этаж"/>
+                                <div>
+                                    <input 
+                                        onChange={(e) => setHouseD(e.target.value)}
+                                        type="text" 
+                                        className="custom-inp-place" 
+                                        value={houseD} 
+                                        placeholder="Дом"/>
+                                    <div ref={refcorrectlyHouseD} className="warning-mistake">Дом не заполнен!</div> 
+                                </div>
+                                <div>
+                                    <input 
+                                        onChange={(e) => setRoomD(e.target.value)}
+                                        type="number" 
+                                        className="custom-inp-place" 
+                                        value={roomD} 
+                                        placeholder="Квартира"/>
+                                    <div className="somediv"></div>
+                                </div>
+                                <div>
+                                    <input 
+                                        onChange={(e) => setEntranceD(e.target.value)}
+                                        type="text" 
+                                        className="custom-inp-place" 
+                                        value={entranceD} 
+                                        placeholder="Подъезд"/>
+                                    <div className="somediv"></div>
+                                </div>
+                                <div>
+                                    <input
+                                        onChange={(e) => setFloorD(e.target.value)} 
+                                        type="number" 
+                                        className="custom-inp-place" 
+                                        value={floorD} 
+                                        placeholder="Этаж"/>
+                                    <div className="somediv"></div>
+                                </div>
                             </fieldset>
 
                             <textarea 
@@ -342,21 +472,28 @@ const BasketRegistration = () => {
                     <div className="form-wrapper__pickup">
                         <form name="form-wrapper__pickup" className="form-pickup">
                             <fieldset>
-                                <input 
-                                    onChange={(e) => setTextP(e.target.value)} 
-                                    value={nameP} 
-                                    type="text" 
-                                    className="custom-inp" 
-                                    placeholder="Имя"/>
-                                <input 
-                                    onChange={(e) => setTelP(e.target.value)} 
-                                    value={telP} 
-                                    type="tel" 
-                                    className="custom-inp" 
-                                    placeholder="Телефон"/>
+                                <div>
+                                    <input 
+                                        onChange={(e) => setTextP(e.target.value)} 
+                                        value={nameP} 
+                                        type="text" 
+                                        className="custom-inp" 
+                                        placeholder="Имя"/>
+                                    <div ref={refcorrectlyNameP} className="warning-mistake">Минимальное количество символов 2!</div> 
+                                </div>
+                                <div>
+                                    <input 
+                                        onChange={(e) => setTelP(e.target.value)} 
+                                        value={telP} 
+                                        type="number" 
+                                        className="custom-inp" 
+                                        placeholder="Телефон"/>
+                                    <div ref={refcorrectlyTelP} className="warning-mistake">Некорректный номер! (Пример: 960 111 22 33)</div> 
+                                </div>
                             </fieldset>
     
                             <fieldset>
+                            <div>
                                 <select 
                                     onChange={(e) => setCityP(e.target.value)} 
                                     value={cityP} 
@@ -365,17 +502,20 @@ const BasketRegistration = () => {
                                     <option value="default" className="custom-option">Выберите город</option>
                                     <option value="voronezh" className="custom-option">Воронеж</option>
                                 </select>
-    
+                                <div ref={refcorrectlyCityP} className="warning-mistake">Необходимо выбрать город!</div> 
+                            </div>
+                            <div>
                                 <select 
-                                onChange={(e) => setRestaurantP(e.target.value)} 
-                                value={restaurantP} 
-                                name="restaurant" 
-                                className="custom-select">
-                                    <option value="default" className="custom-option">Выберите ресторан</option>
-                                    <option value="moscovprospect" className="custom-option">Московский проспект</option>
+                                    onChange={(e) => setRestaurantP(e.target.value)} 
+                                    value={restaurantP} 
+                                    name="restaurant" 
+                                    className="custom-select">
+                                        <option value="default" className="custom-option">Выберите ресторан</option>
+                                        <option value="moscovprospect" className="custom-option">Московский проспект</option>
                                 </select>
+                                <div ref={refcorrectlyRestaurantP} className="warning-mistake">Необходимо выбрать ресторан!</div> 
+                            </div>
                             </fieldset>
-    
                             <textarea 
                                 onChange={(e) => setCommentsP(e.target.value)} 
                                 value={commentsP} 
@@ -445,6 +585,7 @@ const BasketRegistration = () => {
                     <button className="form-wrapper__btn-prev">Назад в корзину</button>
                 </Link>
                 <button 
+                    disabled={isDelivery ? isNextPageDelivery : isNextPagePickup}
                     onClick={sendBasketAndBuyerToBD}
                     className="form-wrapper__btn-next">Оформить заказ</button>
             </div>
