@@ -10,6 +10,7 @@ import {
     addNewCombosItem
 } from '../../../store/basketSlice';
 import {
+    setDetail,
     setNameD,
     setTelD,
     setCityD,
@@ -252,6 +253,10 @@ const BasketRegistration = () => {
 
             if (response.ok) {
                 console.log('Успешно отправлено!');
+
+                const data = await response.json();
+                
+                dispatch(setDetail({number: data.id.slice(0,8), method: data.happyBuyer.payment.includes("курьеру") ? "Delivery" : "Pickup"}));
 
                 dispatch(addNewPizzaItem([]));
                 dispatch(addNewDessertItem([]));

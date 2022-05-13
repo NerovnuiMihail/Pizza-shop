@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import BasketItem from './BasketItem';
+import BasketItem from './BasketItem/BasketItem';
 import {
     addNewPizzaItem,
     addNewDessertItem,

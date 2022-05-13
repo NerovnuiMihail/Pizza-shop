@@ -1,0 +1,41 @@
+.basketdelivery-wrapper{
+    margin-top: 150px;
+    width: 700px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.basketdelivery__content{
+    padding: 50px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 8px;
+    box-shadow: 1px 1px 14px bisque;
+}
+.basketdelivery__title{
+    font-size: 28px;
+    margin-top: 15px;
+    margin-bottom: 50px;
+}
+.basketdelivery__img-delivery{
+    width: 160px;
+}
+.basketdelivery__delivery-descr{
+    margin-top: 30px;
+    font-size: 22px;
+}
+.basketdelivery__delivery-descr span{
+    font-weight: 600;
+    color: rgb(255, 105, 0);
+}
+.basketdelivery__img-order{
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+.basketdelivery__order-descr{
+    font-size: 18px;
+}
+
+

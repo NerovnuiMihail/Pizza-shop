@@ -1,6 +1,6 @@
-import close from './img/close.png';
+import close from '../img/close.png';
 
-import './BasketPage.css';
+import './BasketItem.css';
 
 const BasketItem = ({ id, name, dough, img, cost, count, extra, handleAddBasketItem, handleDeleteBasketItem, handleDeleteBasketAllItems}) => {
     return (

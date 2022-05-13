@@ -16,9 +16,17 @@ const buyerSlice = createSlice({
         telP: "",
         cityP: "",
         restaurantP: "",
-        commentsP: ""
+        commentsP: "",
+        detail: {
+            number: null,
+            method: null
+        }
     },
     reducers: {
+        setDetail(state, action) {
+            state.detail.number = action.payload.number;
+            state.detail.method = action.payload.method;
+        },
         setNameD(state, action) {
             state.nameD = action.payload
         },
@@ -65,6 +73,7 @@ const buyerSlice = createSlice({
 });
 
 export const {
+    setDetail,
     setNameD,
     setTelD,
     setCityD,
