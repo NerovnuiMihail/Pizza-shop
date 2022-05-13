@@ -9,6 +9,7 @@ import PizzaPage from "./PizzaPage/PizzaPage";
 import SnacksPage from "./SnacksPage/SnacksPage";
 import BasketPage from "./Basket/BasketPage";
 import BasketRegistration from "./Basket/BasketRegistration/BasketRegistration";
+import BasketDelivery from "./Basket/BasketDelivery/BasketDelivery";
 
 
 export {
@@ -22,5 +23,6 @@ export {
     PizzaPage,
     SnacksPage,
     BasketPage,
-    BasketRegistration
+    BasketRegistration,
+    BasketDelivery
 }

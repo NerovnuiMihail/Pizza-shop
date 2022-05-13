@@ -9,18 +9,49 @@ import {
     addNewSnacksItem,
     addNewCombosItem
 } from '../../../store/basketSlice';
-
+import {
+    setNameD,
+    setTelD,
+    setCityD,
+    setStreetD,
+    setCommentsD,
+    setHouseD,
+    setRoomD,
+    setEntranceD,
+    setFloorD,
+    setRestaurantP,
+    setNameP,
+    setTelP,
+    setCityP,
+    setCommentsP
+} from '../../../store/buyerSlice';
 
 import './BasketRegistration.css';
 
 const BasketRegistration = () => {
     const dispatch = useDispatch();
-    
+
     const pizzaItems = useSelector(state => state.basket.basket.pizza);
     const combosItems = useSelector(state => state.basket.basket.combos);
     const snacksItems = useSelector(state => state.basket.basket.snacks);
     const drinksItems = useSelector(state => state.basket.basket.drinks);
     const dessertItems = useSelector(state => state.basket.basket.dessert);
+
+    const nameD = useSelector(state => state.buyer.nameD);
+    const telD = useSelector(state => state.buyer.telD);
+    const cityD = useSelector(state => state.buyer.cityD);
+    const streetD = useSelector(state => state.buyer.streetD);
+    const commentsD = useSelector(state => state.buyer.commentsD);
+    const houseD = useSelector(state => state.buyer.houseD);
+    const roomD = useSelector(state => state.buyer.roomD);
+    const entranceD = useSelector(state => state.buyer.entranceD);
+    const floorD = useSelector(state => state.buyer.floorD);
+
+    const nameP = useSelector(state => state.buyer.nameP);
+    const telP = useSelector(state => state.buyer.telP);
+    const cityP = useSelector(state => state.buyer.cityP);
+    const restaurantP = useSelector(state => state.buyer.restaurantP);
+    const commentsP = useSelector(state => state.buyer.commentsP);
 
     const [isNextPageDelivery, setIsNextPageDelivery] = useState(true);
     const [isNextPagePickup, setIsNextPagePickup] = useState(true);
@@ -29,22 +60,6 @@ const BasketRegistration = () => {
     const [isPickup, setIsPickup] = useState(false);
     const refDelivery = useRef(null);
     const refPickup = useRef(null);
-
-    const [nameD, setTextD] = useState("");
-    const [telD, setTelD] = useState("");
-    const [cityD, setCityD] = useState("");
-    const [streetD, setStreetD] = useState("");
-    const [commentsD, setCommentsD] = useState("");
-    const [houseD, setHouseD] = useState("");
-    const [roomD, setRoomD] = useState("");
-    const [entranceD, setEntranceD] = useState("");
-    const [floorD, setFloorD] = useState("");
-
-    const [nameP, setTextP] = useState("");
-    const [telP, setTelP] = useState("");
-    const [cityP, setCityP] = useState("");
-    const [restaurantP, setRestaurantP] = useState("");
-    const [commentsP, setCommentsP] = useState("");
 
     const [deliveryCash, setDeliveryCash] = useState(false);
     const [deliveryCard, setDeliveryCard] = useState(true);
@@ -243,6 +258,22 @@ const BasketRegistration = () => {
                 dispatch(addNewDrinksItem([]));
                 dispatch(addNewSnacksItem([]));
                 dispatch(addNewCombosItem([]));
+
+                dispatch(setNameD(""));
+                dispatch(setTelD(""));
+                dispatch(setCityD(""));
+                dispatch(setStreetD(""));
+                dispatch(setCommentsD(""));
+                dispatch(setHouseD(""));
+                dispatch(setRoomD(""));
+                dispatch(setEntranceD(""));
+                dispatch(setFloorD(""));
+                dispatch(setRestaurantP(""));
+                dispatch(setNameP(""));
+                dispatch(setTelP(""));
+                dispatch(setCityP(""));
+                dispatch(setCommentsP(""));
+
             } else {
                 throw new Error('Ошибка при отправке!');
             }
@@ -378,7 +409,7 @@ const BasketRegistration = () => {
                             <fieldset>
                                 <div>
                                     <input 
-                                        onChange={(e) => setTextD(e.target.value)}
+                                        onChange={(e) => dispatch(setNameD(e.target.value))}
                                         type="text" 
                                         className="custom-inp" 
                                         value={nameD} 
@@ -387,7 +418,7 @@ const BasketRegistration = () => {
                                 </div>
                                 <div>
                                     <input 
-                                        onChange={(e) => setTelD(e.target.value)}
+                                        onChange={(e) => dispatch(setTelD(e.target.value))}
                                         type="number" 
                                         className="custom-inp" 
                                         value={telD} 
@@ -399,7 +430,7 @@ const BasketRegistration = () => {
                             <fieldset>
                                 <div>
                                     <select 
-                                        onChange={(e) => setCityD(e.target.value)} 
+                                        onChange={(e) => dispatch(setCityD(e.target.value))} 
                                         name="city" 
                                         value={cityD} 
                                         className="custom-select" >
@@ -410,7 +441,7 @@ const BasketRegistration = () => {
                                 </div>
                                 <div>
                                     <input 
-                                        onChange={(e) => setStreetD(e.target.value)}
+                                        onChange={(e) => dispatch(setStreetD(e.target.value))}
                                         type="text" 
                                         className="custom-inp" 
                                         value={streetD} 
@@ -422,7 +453,7 @@ const BasketRegistration = () => {
                             <fieldset>
                                 <div>
                                     <input 
-                                        onChange={(e) => setHouseD(e.target.value)}
+                                        onChange={(e) => dispatch(setHouseD(e.target.value))}
                                         type="text" 
                                         className="custom-inp-place" 
                                         value={houseD} 
@@ -431,7 +462,7 @@ const BasketRegistration = () => {
                                 </div>
                                 <div>
                                     <input 
-                                        onChange={(e) => setRoomD(e.target.value)}
+                                        onChange={(e) => dispatch(setRoomD(e.target.value))}
                                         type="number" 
                                         className="custom-inp-place" 
                                         value={roomD} 
@@ -440,7 +471,7 @@ const BasketRegistration = () => {
                                 </div>
                                 <div>
                                     <input 
-                                        onChange={(e) => setEntranceD(e.target.value)}
+                                        onChange={(e) => dispatch(setEntranceD(e.target.value))}
                                         type="text" 
                                         className="custom-inp-place" 
                                         value={entranceD} 
@@ -449,7 +480,7 @@ const BasketRegistration = () => {
                                 </div>
                                 <div>
                                     <input
-                                        onChange={(e) => setFloorD(e.target.value)} 
+                                        onChange={(e) => dispatch(setFloorD(e.target.value))} 
                                         type="number" 
                                         className="custom-inp-place" 
                                         value={floorD} 
@@ -459,7 +490,7 @@ const BasketRegistration = () => {
                             </fieldset>
 
                             <textarea 
-                                onChange={(e) => setCommentsD(e.target.value)} 
+                                onChange={(e) => dispatch(setCommentsD(e.target.value))} 
                                 value={commentsD} 
                                 name="comments" cols="30" rows="10" 
                                 className="custom-textarea" 
@@ -474,7 +505,7 @@ const BasketRegistration = () => {
                             <fieldset>
                                 <div>
                                     <input 
-                                        onChange={(e) => setTextP(e.target.value)} 
+                                        onChange={(e) => dispatch(setNameP(e.target.value))} 
                                         value={nameP} 
                                         type="text" 
                                         className="custom-inp" 
@@ -483,7 +514,7 @@ const BasketRegistration = () => {
                                 </div>
                                 <div>
                                     <input 
-                                        onChange={(e) => setTelP(e.target.value)} 
+                                        onChange={(e) => dispatch(setTelP(e.target.value))} 
                                         value={telP} 
                                         type="number" 
                                         className="custom-inp" 
@@ -495,7 +526,7 @@ const BasketRegistration = () => {
                             <fieldset>
                             <div>
                                 <select 
-                                    onChange={(e) => setCityP(e.target.value)} 
+                                    onChange={(e) => dispatch(setCityP(e.target.value))} 
                                     value={cityP} 
                                     name="city" 
                                     className="custom-select" >
@@ -506,7 +537,7 @@ const BasketRegistration = () => {
                             </div>
                             <div>
                                 <select 
-                                    onChange={(e) => setRestaurantP(e.target.value)} 
+                                    onChange={(e) => dispatch(setRestaurantP(e.target.value))} 
                                     value={restaurantP} 
                                     name="restaurant" 
                                     className="custom-select">
@@ -517,7 +548,7 @@ const BasketRegistration = () => {
                             </div>
                             </fieldset>
                             <textarea 
-                                onChange={(e) => setCommentsP(e.target.value)} 
+                                onChange={(e) => dispatch(setCommentsP(e.target.value))} 
                                 value={commentsP} 
                                 name="comments" cols="30" rows="10" 
                                 className="custom-textarea" 
@@ -584,10 +615,12 @@ const BasketRegistration = () => {
                 <Link to="/basket">
                     <button className="form-wrapper__btn-prev">Назад в корзину</button>
                 </Link>
-                <button 
-                    disabled={isDelivery ? isNextPageDelivery : isNextPagePickup}
-                    onClick={sendBasketAndBuyerToBD}
-                    className="form-wrapper__btn-next">Оформить заказ</button>
+                <Link to="/basketdelivery">
+                    <button 
+                        disabled={isDelivery ? isNextPageDelivery : isNextPagePickup}
+                        onClick={sendBasketAndBuyerToBD}
+                        className="form-wrapper__btn-next">Оформить заказ</button>
+                </Link>
             </div>
         </div>
     );
