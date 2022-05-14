@@ -4,14 +4,18 @@ import ExternalCard from '../../components/ExternalCard/ExternalCard';
 import Skeleton from '../../components/skeleton/Skeleton';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import InsideCard from '../../components/InsideCard/InsideCard';
+import PopularCard from '../../components/PopularCard/PopularCard';
+import useApiPopular from '../../services/useApiPopular';
 
 import './DessertPage.css';
 
 const DessertPage = ({head}) => {
     const [data, loading, error, getRequest] = useApiData("dessert");
+    const [popular, isLoading, isError, getPopular] = useApiPopular("dessert");
 
     useEffect(() => {
         getRequest('http://localhost:3001/api/dessert');
+        getPopular();
          // eslint-disable-next-line
     }, []);
 
@@ -29,7 +33,21 @@ const DessertPage = ({head}) => {
 
     return (
         <main className="dessert-page content-wrapper">
-            {head ? <h1>Часто заказывают:</h1> : null}
+                        {!head ? null : (
+                                <div className="dessert-page__popular">
+                                    <h1>Часто заказывают:</h1>
+                                    <div className="dessert-popular">
+                                        {!popular ? null : (
+                                            popular.map(item => {
+                                                return (
+                                                    <PopularCard key={item.id} Inside={InsideCard} data={data} pageName="snacks" item={item} />
+                                                );
+                                            })
+                                        )}
+                                    </div>
+                                </div>
+                        )}
+
             <section className="dessert-content">
                 {errorMessage}
                 {loadingData}

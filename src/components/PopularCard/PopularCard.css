@@ -12,18 +12,24 @@
     box-shadow: 1px 1px 18px tomato;
 }
 .popular-card__wrap{
+    height: 100%;
     margin-left: 15px;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 }
 .popular-card__img{
     width: 150px;
 }
 .popular-card__title{
+    margin-top: 15px;
+    text-align: center;
     font-weight: 600;
     font-size: 18px;
     margin-bottom: 15px;
 }
 .popular-card__cost{
+    text-align: center;
     font-size: 18px;
+    margin-bottom: 15px;
 }

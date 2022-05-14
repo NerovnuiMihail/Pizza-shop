@@ -12,7 +12,7 @@ import close from './close.png';
 import './InsideHardCard.css';
 
 
-const InsideHardCard = ({setIsVisible, id, pageName, price, dough, img: {thin,traditional}, name, calories, description}) => {
+const InsideHardCard = ({setIsVisible, id, pageName, price, dough, img: {thin,traditional}, name, calories, description, additionally}) => {
     const [hideCalories, setHideCalories] = useState(true);
     const basket = useSelector(state => state.basket.basket.pizza);
     const costExtra = useSelector(state => state.basket.basket.costExtra);
@@ -20,7 +20,17 @@ const InsideHardCard = ({setIsVisible, id, pageName, price, dough, img: {thin,tr
     const {dough: rDough, size: rSize} = useSelector(state => state.shop.selectPizza);
     const dispatch = useDispatch();
     const [someNum] = useNum(pageName);
-    const descr = description.slice().split(',').join(', ').toLowerCase();
+
+    // console.log('description',description);
+    // console.log('additionally',additionally);
+
+    let descr;
+
+    if (description) {
+        descr = description.slice().split(',').join(', ').toLowerCase();
+    } else {
+        descr = additionally.default.slice().join(', ').toLowerCase();
+    }
 
     useEffect(() => {
         document.body.addEventListener('click', handleClick);

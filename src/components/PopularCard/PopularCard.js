@@ -6,8 +6,14 @@ import './PopularCard.css';
 
 const PopularCard = ({pageName, data, Inside, item: {id, name, cost}}) => {
     const [isVisible, setIsVisible] = useState(false);
+    let img ;
 
-    const img = data.filter(item => item.id === id)[0].img;
+    if (typeof (data.filter(item => item.id === id)[0].img) === "string") {
+        img = data.filter(item => item.id === id)[0].img;
+    } else {
+        img = data.filter(item => item.id === id)[0].img.traditional;
+    }
+    
     const itemForInside = data.filter(item => item.id === id)[0];
 
     const handleClick = () => {
