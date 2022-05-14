@@ -49,6 +49,7 @@ const InsideCard = ({setIsVisible, calories, id, img, name, weight, description,
             weight: weight,
             cost: price,
             count: 1,
+            pageName,
             num: someNum() + 1
         };
 

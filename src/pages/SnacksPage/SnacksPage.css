@@ -3,11 +3,23 @@
     display: flex;
     flex-direction: column;
 }
-.snacks-page h1{
+.snacks-page__popular{
+    display: flex;
+    flex-direction: column;
     margin: 50px 0;
     margin-top: 150px;
+    font-weight: 600;
+    font-size: 22px;
+}
+.snacks-popular{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.snacks-page__popular h1{
     font-weight: 700;
     font-size: 22px;
+    margin-bottom: 20px;
 }
 .snacks-content{
     display: flex;

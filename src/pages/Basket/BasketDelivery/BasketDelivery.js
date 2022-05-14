@@ -20,15 +20,15 @@ const BasketDelivery = () => {
                             <img src={numberoforder} alt="numberoforder" className="basketdelivery__img-order"/>
                             <h2 className="basketdelivery__order-descr">Номер вашего заказа: <span> {detail.number} </span></h2>
                         </div>
-            ) : (
-                <div className="basketdelivery__content">
-                    <img src={delivery} alt="delivery" className="basketdelivery__img-delivery" />
-                    <h1 className="basketdelivery__title">Спасибо за заказ!</h1>
-                    <h2 className="basketdelivery__delivery-descr">Доставка в течении 90 минут</h2>
-                    <h2 className="basketdelivery__delivery-descr">В случае опоздания, весь заказ - <span>БЕСПЛАТНО!</span></h2>
-                    <img src={numberoforder} alt="numberoforder" className="basketdelivery__img-order"/>
-                    <h2 className="basketdelivery__order-descr">Номер вашего заказа: <span> {detail.number} </span></h2>
-                </div>
+                    ) : (
+                        <div className="basketdelivery__content">
+                            <img src={delivery} alt="delivery" className="basketdelivery__img-delivery" />
+                            <h1 className="basketdelivery__title">Спасибо за заказ!</h1>
+                            <h2 className="basketdelivery__delivery-descr">Доставка в течении 90 минут</h2>
+                            <h2 className="basketdelivery__delivery-descr">В случае опоздания, весь заказ - <span>БЕСПЛАТНО!</span></h2>
+                            <img src={numberoforder} alt="numberoforder" className="basketdelivery__img-order"/>
+                            <h2 className="basketdelivery__order-descr">Номер вашего заказа: <span> {detail.number} </span></h2>
+                        </div>
             )}
         </div>
     );
