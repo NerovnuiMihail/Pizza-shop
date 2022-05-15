@@ -20,10 +20,6 @@ const InsideHardCard = ({setIsVisible, id, pageName, price, dough, img: {thin,tr
     const {dough: rDough, size: rSize} = useSelector(state => state.shop.selectPizza);
     const dispatch = useDispatch();
     const [someNum] = useNum(pageName);
-
-    // console.log('description',description);
-    // console.log('additionally',additionally);
-
     let descr;
 
     if (description) {

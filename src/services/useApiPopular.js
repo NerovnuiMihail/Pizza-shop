@@ -15,41 +15,47 @@ function useApiPopular(TITLE) {
     const [isError, setIsError] = useState(false);
 
     const getPopular = useCallback(async () => {
-        setIsLoading(true);
-        const response = await fetch(`http://localhost:3001/api/popular/${TITLE}`);
 
-        if (!response.ok) {
-            setIsError(true);
-            throw new Error('Ошибка при загрузке данных!')
-        }
+        if (popular.length) {
+            return;
+        } else {
+            setIsLoading(true);
 
-        const data = await response.json();
+            const response = await fetch(`http://localhost:3001/api/popular/${TITLE}`);
 
-        switch (TITLE) {
-            case "dessert":
-                setIsLoading(false);
-                dispatch(addPopularDessert(data));
-                break;
-            case "pizza":
-                setIsLoading(false);
-                dispatch(addPopularPizza(data));
-                break;
-            case "drinks":
-                setIsLoading(false);
-                dispatch(addPopularDrinks(data));
-                break;
-            case "snacks":
-                setIsLoading(false);
-                dispatch(addPopularSnacks(data));
-                break;
-            case "combos":
-                setIsLoading(false);
-                dispatch(addPopularCombos(data));
-                break;
-        
-            default:
-                break;
-        }
+            if (!response.ok) {
+                setIsError(true);
+                throw new Error('Ошибка при загрузке данных!')
+            }
+
+            const data = await response.json();
+
+            switch (TITLE) {
+                case "dessert":
+                    setIsLoading(false);
+                    dispatch(addPopularDessert(data));
+                    break;
+                case "pizza":
+                    setIsLoading(false);
+                    dispatch(addPopularPizza(data));
+                    break;
+                case "drinks":
+                    setIsLoading(false);
+                    dispatch(addPopularDrinks(data));
+                    break;
+                case "snacks":
+                    setIsLoading(false);
+                    dispatch(addPopularSnacks(data));
+                    break;
+                case "combos":
+                    setIsLoading(false);
+                    dispatch(addPopularCombos(data));
+                    break;
+            
+                default:
+                    break;
+            }
+        }    
     // eslint-disable-next-line
     }, []);
 

@@ -4,15 +4,17 @@ import {
     PizzaPage,
     SnacksPage
 } from "../index";
+import Slider from "../../components/Slider/Slider";
+
 import './HomePage.css';
 
 const HomePage = () => {
     return (
         <div className="home-page">
-            <h1 className="home-page__titile">Часто заказывают</h1>
-            <div className="home-page__like">
+            <h1 className="home-page__titile">Самые популярные</h1>
 
-            </div>
+            <Slider />
+            
             <h2 className="home-page__titile">Пицца</h2>
             <PizzaPage/>
 

@@ -30,6 +30,18 @@ const SnacksPage = ({head}) => {
                 btnName="В корзину" />
     });
 
+    const popularCards = !popular ? null : (
+        popular.map(item => {
+            return (
+                <PopularCard key={item.id} 
+                    Inside={InsideCard} 
+                    data={data} 
+                    pageName="snacks" 
+                    item={item} />
+            );
+        })
+    );
+
     const errorMessage = error ? <ErrorMessage/> : null;
     const loadingData = loading ? <Skeleton/> : null;
 
@@ -39,13 +51,7 @@ const SnacksPage = ({head}) => {
                                 <div className="snacks-page__popular">
                                     <h1>Часто заказывают:</h1>
                                     <div className="snacks-popular">
-                                        {!popular ? null : (
-                                            popular.map(item => {
-                                                return (
-                                                    <PopularCard key={item.id} Inside={InsideCard} data={data} pageName="snacks" item={item} />
-                                                );
-                                            })
-                                        )}
+                                        {popularCards}
                                     </div>
                                 </div>
             )}

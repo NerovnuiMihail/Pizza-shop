@@ -145,7 +145,8 @@ const BasketRegistration = () => {
                     size: item.size,
                     dough: item.dough,
                     cost: item.cost,
-                    count: item.count
+                    count: item.count,
+                    img: item.img
                 }
             });
 
@@ -158,7 +159,8 @@ const BasketRegistration = () => {
                     title: "snacks",
                     name: item.name,
                     cost: item.cost,
-                    count: item.count
+                    count: item.count,
+                    img: item.img
                 }
             });
 
@@ -171,7 +173,8 @@ const BasketRegistration = () => {
                     title: "snacks",
                     name: item.name,
                     cost: item.cost,
-                    count: item.count
+                    count: item.count,
+                    img: item.img
                 }
             });
 
@@ -184,7 +187,8 @@ const BasketRegistration = () => {
                     title: "drinks",
                     name: item.name,
                     cost: item.cost,
-                    count: item.count
+                    count: item.count,
+                    img: item.img
                 }
             });
 
@@ -197,7 +201,8 @@ const BasketRegistration = () => {
                     title: "dessert",
                     name: item.name,
                     cost: item.cost,
-                    count: item.count
+                    count: item.count,
+                    img: item.img
                 }
             });
 

@@ -34,6 +34,18 @@ const PizzaPage = ({head}) => {
                 btnName="Выбрать" />
     });
 
+    const popularCards = !popular ? null : (
+                                            popular.map(item => {
+                                                return (
+                                                    <PopularCard key={item.id} 
+                                                        Inside={InsideHardCard} 
+                                                        data={data} 
+                                                        pageName="pizza" 
+                                                        item={item} />
+                                                );
+                                            })
+    );
+
     const errorMessage = error ? <ErrorMessage/> : null;
     const loadingData = loading ? <Skeleton/> : null;
 
@@ -43,17 +55,7 @@ const PizzaPage = ({head}) => {
                     <div className="pizza-page__popular">
                         <h1>Часто заказывают:</h1>
                         <div className="pizza-popular">
-                            {!popular ? null : (
-                                popular.map(item => {
-                                    return (
-                                        <PopularCard key={item.id} 
-                                            Inside={InsideHardCard} 
-                                            data={data} 
-                                            pageName="pizza" 
-                                            item={item} />
-                                    );
-                                })
-                            )}
+                            {popularCards}
                         </div>
                     </div>
             )}

@@ -29,6 +29,18 @@ const DrinksPage = ({head}) => {
                 btnName="В корзину" />
     });
 
+    const popularCards = !popular ? null : (
+        popular.map(item => {
+            return (
+                <PopularCard key={item.id} 
+                    Inside={InsideCard} 
+                    data={data} 
+                    pageName="drinks" 
+                    item={item} />
+            );
+        })
+    );
+
     const errorMessage = error ? <ErrorMessage/> : null;
     const loadingData = loading ? <Skeleton/> : null;
 
@@ -38,13 +50,7 @@ const DrinksPage = ({head}) => {
                                 <div className="drinks-page__popular">
                                     <h1>Часто заказывают:</h1>
                                     <div className="drinks-popular">
-                                        {!popular ? null : (
-                                            popular.map(item => {
-                                                return (
-                                                    <PopularCard key={item.id} Inside={InsideCard} data={data} pageName="snacks" item={item} />
-                                                );
-                                            })
-                                        )}
+                                        {popularCards}
                                     </div>
                                 </div>
                         )}
