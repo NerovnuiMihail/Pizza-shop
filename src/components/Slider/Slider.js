@@ -1,7 +1,8 @@
 import { useSelector } from 'react-redux';
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 
 import arrow from './arrow.png';
+import down from './down.png';
 
 import './Slider.css';
 
@@ -10,56 +11,73 @@ const Slider = () => {
     const popularDessert = useSelector(state => state.popular.dessert);
     const popularSnacks = useSelector(state => state.popular.snacks);
     const popularDrinks = useSelector(state => state.popular.drinks);
+    const [slideCounter, setSlideCounter] = useState(0);
 
     const pizzaRef = useRef(null);
     const dessertRef = useRef(null);
     const snacksRef = useRef(null);
     const drinksRef = useRef(null);
 
-    let slideCounter;
+    useEffect(() => {
+        ChangeSlide();
+    })
 
-    const handleChangeSlide = () => {
-        
+    const handleDown = () => {
+        if (slideCounter > 0 && slideCounter < 4) {
+            setSlideCounter(slideCounter => slideCounter - 1);
+        }
+    };
+
+    const handleUp = () => {
+        if (slideCounter === 0) {
+            setSlideCounter(1);
+        } else {
+            if (slideCounter === 4) {
+                setSlideCounter(0);
+            } else {
+                setSlideCounter(slideCounter => slideCounter + 1);
+            }
+        }
+    };
+
+    const ChangeSlide = () => {
+
         switch (slideCounter) {
             case 0:
-                slideCounter = slideCounter + 1;
-                pizzaRef.current.style.top = `${parseInt(pizzaRef.current.style.top) - 300}px`;
-                drinksRef.current.style.top = `${parseInt(drinksRef.current.style.top) - 300}px`;
+                pizzaRef.current.style.top = "25px";
+                drinksRef.current.style.top = "25px";
 
-                dessertRef.current.style.top = `${parseInt(dessertRef.current.style.top) + 300}px`;
-                snacksRef.current.style.top = `${parseInt(snacksRef.current.style.top) + 300}px`;
+                dessertRef.current.style.top = "-875px";
+                snacksRef.current.style.top = "-875px";
                 break;
             case 1:
-                slideCounter = slideCounter + 1;
-                pizzaRef.current.style.top = `${parseInt(pizzaRef.current.style.top) - 300}px`;
-                drinksRef.current.style.top = `${parseInt(drinksRef.current.style.top) - 300}px`;
-                
-                dessertRef.current.style.top = `${parseInt(dessertRef.current.style.top) + 300}px`;
-                snacksRef.current.style.top = `${parseInt(snacksRef.current.style.top) + 300}px`;
+                pizzaRef.current.style.top = "-275px";
+                drinksRef.current.style.top = "-275px";
+
+                dessertRef.current.style.top = "-575px";
+                snacksRef.current.style.top = "-575px";
                 break;
             case 2:
-                slideCounter = slideCounter + 1;
-                pizzaRef.current.style.top = `${parseInt(pizzaRef.current.style.top) - 300}px`;
-                drinksRef.current.style.top = `${parseInt(drinksRef.current.style.top) - 300}px`;
+                pizzaRef.current.style.top = "-575px";
+                drinksRef.current.style.top = "-575px";
 
-                dessertRef.current.style.top = `${parseInt(dessertRef.current.style.top) + 300}px`;
-                snacksRef.current.style.top = `${parseInt(snacksRef.current.style.top) + 300}px`;
+                dessertRef.current.style.top = "-275px";
+                snacksRef.current.style.top = "-275px";
                 break;
             case 3:
-                slideCounter = 0;
-                pizzaRef.current.style.top = `${parseInt(pizzaRef.current.style.top) + 900}px`;
-                drinksRef.current.style.top = `${parseInt(drinksRef.current.style.top) + 900}px`;
+                pizzaRef.current.style.top = "-875px";
+                drinksRef.current.style.top = "-875px";
 
-                dessertRef.current.style.top = `${parseInt(dessertRef.current.style.top) - 900}px`;
-                snacksRef.current.style.top = `${parseInt(snacksRef.current.style.top) - 900}px`;
+                dessertRef.current.style.top = "25px";
+                snacksRef.current.style.top = "25px";
                 break;
-            case undefined:
-                slideCounter = 1;
-                pizzaRef.current.style.top = `-275px`;
-                drinksRef.current.style.top = `-275px`;
+            case 4:
+                setSlideCounter(0);
+                pizzaRef.current.style.top = "25px";
+                drinksRef.current.style.top = "25px";
 
-                dessertRef.current.style.top = `-575px`;
-                snacksRef.current.style.top = `-575px`;
+                dessertRef.current.style.top = "-875px";
+                snacksRef.current.style.top = "-875px";
                 break;
             default:
                 break;    
@@ -86,9 +104,9 @@ const Slider = () => {
 
     return (
         <div className="slider-wrapper">
-            <div onClick={handleChangeSlide} className="slider-btn__down">
-                <img src={arrow} alt="arrow down" className="slider-btn__img" />
-            </div>
+            <button onClick={handleDown} className="slider-btn__down">
+                <img src={slideCounter === 0 ? down : arrow} alt="arrow down" className="slider-btn__img btn__down" />
+            </button>
 
             <div className="slider-content">
                 <div ref={pizzaRef} className="slider-content__pizza">
@@ -105,9 +123,9 @@ const Slider = () => {
                 </div>
             </div>
 
-            <div onClick={handleChangeSlide} className="slider-btn__up">
-                <img src={arrow} alt="arrow up" />
-            </div>
+            <button onClick={handleUp} className="slider-btn__up">
+                <img src={arrow} alt="arrow up" className="btn__up" />
+            </button>
         </div>
     );
 }
