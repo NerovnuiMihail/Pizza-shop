@@ -1,12 +1,21 @@
 import { useSelector } from 'react-redux';
 import { useRef, useState, useEffect } from 'react';
+import SlideItem from './SlideItem/SlideItem';
+import InsideHardCard from './../InsideHardCard/InsideHardCard';
+import InsideCard from './../InsideCard/InsideCard';
 
 import arrow from './arrow.png';
 import down from './down.png';
 
 import './Slider.css';
 
+
 const Slider = () => {
+    const pizza = useSelector(state => state.shop.pizza);
+    const dessert = useSelector(state => state.shop.dessert);
+    const drinks = useSelector(state => state.shop.drinks);
+    const snacks = useSelector(state => state.shop.snacks);
+
     const popularPizza = useSelector(state => state.popular.pizza);
     const popularDessert = useSelector(state => state.popular.dessert);
     const popularSnacks = useSelector(state => state.popular.snacks);
@@ -86,19 +95,19 @@ const Slider = () => {
     };
 
     const pizzaView = !popularPizza ? null : popularPizza.map(item => {
-                                                    return <SlideItem key={item.id} {...item} />
+                                                    return <SlideItem key={item.id + item.name} {...item} pageName="pizza" Inside={InsideHardCard} data={pizza} />
                                                 });
 
     const dessertView = !popularDessert ? null : popularDessert.map(item => {
-                                                    return <SlideItem key={item.id} {...item} />
+                                                    return <SlideItem key={item.id + item.name} {...item} pageName="dessert" Inside={InsideCard} data={dessert} />
                                                 });
 
     const snacksView = !popularSnacks ? null : popularSnacks.map(item => {
-                                                    return <SlideItem key={item.id} {...item} />
+                                                    return <SlideItem key={item.id + item.name} {...item} pageName="snacks" Inside={InsideCard} data={snacks} />
                                                 });
 
     const drinksView = !popularDrinks ? null : popularDrinks.map(item => {
-                                                    return <SlideItem key={item.id} {...item} />
+                                                    return <SlideItem key={item.id + item.name} {...item} pageName="drinks" Inside={InsideCard} data={drinks} />
                                                 });
 
 
@@ -126,17 +135,6 @@ const Slider = () => {
             <button onClick={handleUp} className="slider-btn__up">
                 <img src={arrow} alt="arrow up" className="btn__up" />
             </button>
-        </div>
-    );
-}
-
-const SlideItem = ({img, name}) => {
-    const image = typeof(img) === "string" ? img : img.traditional;
-
-    return (
-        <div className="slide-item">
-            <img src={image} alt={name} className="slide-item__img" />
-            <div className="slide-item__title"> {name} </div>
         </div>
     );
 }
