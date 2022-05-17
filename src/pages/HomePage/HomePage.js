@@ -2,7 +2,8 @@ import {
     DessertPage,
     DrinksPage,
     PizzaPage,
-    SnacksPage
+    SnacksPage,
+    CombosPage
 } from "../index";
 import Slider from "../../components/Slider/Slider";
 
@@ -17,6 +18,9 @@ const HomePage = () => {
             
             <h2 className="home-page__titile">Пицца</h2>
             <PizzaPage/>
+
+            <h2 className="home-page__titile">Комбо</h2>
+            <CombosPage/>
 
             <h2 className="home-page__titile">Закуски</h2>
             <SnacksPage/>
