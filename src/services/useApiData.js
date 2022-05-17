@@ -6,7 +6,8 @@ import {
     setDrinksData, 
     setSnacksData, 
     setBonusData, 
-    setExtraData 
+    setExtraData,
+    setCombosData
 } from "../store/shopSlice";
 
 
@@ -29,6 +30,9 @@ function useApiData(TITLE) {
                 switch (TITLE) {
                     case "dessert":
                         dispatch(setDessertData(response));
+                        break;
+                    case "combos":
+                        dispatch(setCombosData(response));
                         break;
                     case "pizza":
                         dispatch(setPizzaData(response));

@@ -23,7 +23,7 @@ const ExternalCard = ({img, image, price, cost, name, description, btnName, Insi
         }
     }
 
-        const handleAddItemInBasket = () => {
+    const handleAddItemInBasket = () => {
         const basketItem = {
             id: id,
             img,

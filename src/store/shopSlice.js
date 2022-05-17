@@ -19,6 +19,9 @@ const shopSlice = createSlice({
         setPizzaData(state, action) {
             state.pizza = action.payload.pizza
         },
+        setCombosData(state, action) {
+            state.combos = action.payload.combos
+        },
         setDessertData(state, action) {
             state.dessert = action.payload.dessert
         },
@@ -48,6 +51,7 @@ export const {
     setSnacksData, 
     setBonusData, 
     setExtraData,
-    changeSelectPizza 
+    changeSelectPizza,
+    setCombosData
 } = shopSlice.actions;
 export default shopSlice.reducer;
