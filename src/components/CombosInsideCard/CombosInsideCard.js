@@ -105,19 +105,19 @@ const CombosInsideCard = ({setIsVisible, id, name, description, startPrice, star
     const activeItemsChange = (activeItem) => {
         switch (activeItem) {
             case "pizza":
-                return pizza.map(item => <InsideExtraSmallCard img={item.img.traditional} name={item.name} />);
+                return pizza.map(item => <InsideExtraSmallCard key={item.id} {...item} img={item.img.traditional} pageName="pizza" />);
             case "drinks":
-                return drinks.map(item => <InsideExtraSmallCard img={item.img} name={item.name} />);
+                return drinks.map(item => <InsideExtraSmallCard key={item.id} {...item} pageName="drinks" />);
             case "dessert":
-                return dessert.slice(0,2).map(item => <InsideExtraSmallCard img={item.img} name={item.name} />);
+                return dessert.slice(0,2).map(item => <InsideExtraSmallCard key={item.id} {...item} pageName="dessert" />);
         
             default:
                 break;
         }
     }
 
-    console.log(combosItems);
-    console.log(activeItem);
+    // console.log(combosItems);
+    // console.log(activeItem);
 
     // добавить информирование о добавлении в корзину
 
