@@ -8,21 +8,33 @@ const InsideSmallCard = ({name, description, img, isClicked, btns}) => {
     const combosItems = useSelector(state => state.combos.combosItems);
     
     const handleClicked = () => {
-        const offClickedOldItems = combosItems.map(item => {
-            if (item.name === name) {
-                return {
-                    ...item,
-                    isClicked: true
-                }
-            } else {
+        if (isClicked) {
+            const offClickedOldItems = combosItems.map(item => {
                 return {
                     ...item,
                     isClicked: false
                 }
-            }
-        });
+            });
 
-        dispatch(setCombosItem(offClickedOldItems));
+            dispatch(setCombosItem(offClickedOldItems));
+
+        } else {
+            const offClickedOldItems = combosItems.map(item => {
+                if (item.name === name) {
+                    return {
+                        ...item,
+                        isClicked: true
+                    }
+                } else {
+                    return {
+                        ...item,
+                        isClicked: false
+                    }
+                }
+            });
+
+            dispatch(setCombosItem(offClickedOldItems));
+        }
     };
 
     return (

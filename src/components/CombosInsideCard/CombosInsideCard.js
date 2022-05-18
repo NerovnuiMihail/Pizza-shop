@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCombosItem } from '../../store/combosSlice';
 import InsideSmallCard from './InsideSmallCard/InsideSmallCard';
+import InsideExtraSmallCard from './InsideExtraSmallCard/InsideExtraSmallCard';
 
 import close from './close.png';
 
@@ -24,7 +25,7 @@ const CombosInsideCard = ({setIsVisible, id, name, description, startPrice, star
                 for (let i = 0; i < item.pizza; i++) {
                     currentContent.push({
                         id: pizza[i].id,
-                        num: ind,
+                        num: ind + 1 + pizza.length + i,
                         pageName: "pizza",
                         isClicked: false,
                         name: pizza[i].name,
@@ -37,7 +38,7 @@ const CombosInsideCard = ({setIsVisible, id, name, description, startPrice, star
                 for (let i = 0; i < item.drinks; i++) {
                     currentContent.push({
                         id: drinks[i].id,
-                        num: ind,
+                        num: ind + i + drinks.length * 2,
                         pageName: "drinks",
                         isClicked: false,
                         name: drinks[i].name,
@@ -50,7 +51,7 @@ const CombosInsideCard = ({setIsVisible, id, name, description, startPrice, star
                 for (let i = 0; i < item.dessert; i++) {
                     currentContent.push({
                         id: dessert[i].id,
-                        num: ind,
+                        num: ind + 1 + dessert.length%3,
                         pageName: "dessert",
                         isClicked: false,
                         name: dessert[i].name,
@@ -97,34 +98,63 @@ const CombosInsideCard = ({setIsVisible, id, name, description, startPrice, star
                                                             btns={item.btns} />
     ); 
 
+    const isVisible = combosItems.filter(item => item.isClicked).length > 0;
+
+    const activeItem = isVisible ? combosItems.filter(item => item.isClicked)[0].pageName : null;
+
+    const activeItemsChange = (activeItem) => {
+        switch (activeItem) {
+            case "pizza":
+                return pizza.map(item => <InsideExtraSmallCard img={item.img.traditional} name={item.name} />);
+            case "drinks":
+                return drinks.map(item => <InsideExtraSmallCard img={item.img} name={item.name} />);
+            case "dessert":
+                return dessert.slice(0,2).map(item => <InsideExtraSmallCard img={item.img} name={item.name} />);
+        
+            default:
+                break;
+        }
+    }
+
+    console.log(combosItems);
+    console.log(activeItem);
+
     // добавить информирование о добавлении в корзину
 
     return (
         <div className="combos-inside-card-wrapper">
 
-        <div className="combos-inside-card__imgs">
-            <div className="combos-inside-card__preview">
-                <img src={imgPreview} alt={name} />
+            <div className="combos-inside-card__imgs">
+
+                {!isVisible ? (
+                        <div className="combos-inside-card__preview">
+                            <img src={imgPreview} alt={name} />
+                        </div>
+                            ) : (
+                        <div className="combos-inside-card__all-items">
+                            {activeItemsChange(activeItem)}
+                        </div>
+                )}
+
             </div>
-        </div>
 
-        <div className="combos-inside-card__descr">
-            <img src={close} alt="close" className="combos-inside-card__close" />
-            <h2 className="combos-inside-card__descr-title">{name}</h2>
-            <p className="combos-inside-card__descr-description"> {description} </p>
+            <div className="combos-inside-card__descr">
+                <img src={close} alt="close" className="combos-inside-card__close" />
+                <h2 className="combos-inside-card__descr-title">{name}</h2>
+                <p className="combos-inside-card__descr-description"> {description} </p>
 
-            <div className="combos-inside-card__descr-content">
-                {content}
-            </div>
-
-            <div className="combos-inside-card__descr-footer">
-                <div className="combos-inside-card__price combos-price">
-                    <div className="combos-price__sale"> {startPriceWithSale} &#x20bd;</div>
-                    <div className="combos-price__whitout-sale"> {startPrice} &#x20bd;</div>
+                <div className="combos-inside-card__descr-content">
+                    {content}
                 </div>
-                <button className="combos-inside-card__btn">В корзину</button>
+
+                <div className="combos-inside-card__descr-footer">
+                    <div className="combos-inside-card__price combos-price">
+                        <div className="combos-price__sale"> {startPriceWithSale} &#x20bd;</div>
+                        <div className="combos-price__whitout-sale"> {startPrice} &#x20bd;</div>
+                    </div>
+                    <button className="combos-inside-card__btn">В корзину</button>
+                </div>
             </div>
-        </div>
 
         </div>
     );

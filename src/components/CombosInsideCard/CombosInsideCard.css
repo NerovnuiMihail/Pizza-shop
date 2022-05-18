@@ -1,6 +1,6 @@
 .combos-inside-card-wrapper{
     margin: 120px auto;
-    width: 990px;
+    width: 1010px;
     height: 760px;
     display: flex;
     align-items: center;
@@ -8,14 +8,21 @@
     border-radius: 20px;
     background-color: white;
 }
-.combos-inside-card__imgs{
-    width: 490px;
+.combos-inside-card__imgs, .combos-inside-card__all-items{
+    width: 520px;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
+}
+.combos-inside-card__all-items{
+    padding-top: 25px;
+    flex-wrap: wrap;
+    column-gap: 5px;
+    row-gap: 5px;
+    overflow: auto;
 }
 .combos-inside-card__preview{
     width: 100%;
