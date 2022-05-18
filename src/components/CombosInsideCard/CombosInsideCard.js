@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import useApiData from '../../services/useApiData';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCombosItem } from '../../store/combosSlice';
 import InsideSmallCard from './InsideSmallCard/InsideSmallCard';
 
 import close from './close.png';
@@ -9,20 +9,60 @@ import './CombosInsideCard.css';
 
 
 const CombosInsideCard = ({setIsVisible, id, name, description, startPrice, startPriceWithSale, imgPreview, combosItem}) => {
-    const [,,, getRequestP] = useApiData("pizza");
-    const [,,, getRequestDe] = useApiData("dessert");
-    const [,,, getRequestDr] = useApiData("drinks");
+    const dispatch = useDispatch();
 
     const pizza = useSelector(state => state.shop.pizza);
     const dessert = useSelector(state => state.shop.dessert);
     const drinks = useSelector(state => state.shop.drinks);
+    const combosItems = useSelector(state => state.combos.combosItems);
 
     useEffect(() => {
-        if (pizza.length < 1 || dessert.length < 1 || drinks.length < 1) {
-            getRequestP("http://localhost:3001/api/pizza");
-            getRequestDe("http://localhost:3001/api/dessert");
-            getRequestDr("http://localhost:3001/api/drinks");
-        }
+        const currentContent = [];
+
+        combosItem.forEach((item,ind) => {
+            if (item.pizza) {
+                for (let i = 0; i < item.pizza; i++) {
+                    currentContent.push({
+                        id: pizza[i].id,
+                        num: ind,
+                        pageName: "pizza",
+                        isClicked: false,
+                        name: pizza[i].name,
+                        description: pizza[i].additionally.default.join(', '),
+                        img: pizza[i].img.traditional,
+                        btns: "pizza"
+                    });
+                }
+            } else if (item.drinks) {
+                for (let i = 0; i < item.drinks; i++) {
+                    currentContent.push({
+                        id: drinks[i].id,
+                        num: ind,
+                        pageName: "drinks",
+                        isClicked: false,
+                        name: drinks[i].name,
+                        description: drinks[i].description,
+                        img: drinks[i].img,
+                        btns: "drinks"
+                    });
+                }
+            } else if (item.dessert) {
+                for (let i = 0; i < item.dessert; i++) {
+                    currentContent.push({
+                        id: dessert[i].id,
+                        num: ind,
+                        pageName: "dessert",
+                        isClicked: false,
+                        name: dessert[i].name,
+                        description: dessert[i].description,
+                        img: dessert[i].img,
+                        btns: "dessert"
+                    });
+                }
+            }
+        });
+
+        dispatch(setCombosItem(currentContent));
 
         // eslint-disable-next-line
     }, []);
@@ -41,43 +81,21 @@ const CombosInsideCard = ({setIsVisible, id, name, description, startPrice, star
         document.querySelector('#modal-root').style.display = "none";
         document.querySelector('.header').style.marginRight = "";
         setIsVisible(false);
-    }
+    };
 
     const handleClick = (e) => {
         if (e.target.classList.contains("combos-inside-card__close") || e.target.id === "modal-root") {
             hidePortal();
         }
-    }
+    };
 
-    const content = combosItem.map((item, ind) => {
-        if (Object.keys(item).includes("pizza")) {
-            const combosItemIndex = combosItem.findIndex(item => Object.keys(item).includes("pizza"));
-
-            return pizza.map(pizzaItem => <InsideSmallCard key={ind + pizzaItem.name} 
-                name={pizzaItem.name} 
-                description={pizzaItem.additionally.default.join(', ')} 
-                img={pizzaItem.img.traditional}  />).slice(0, combosItem[combosItemIndex].pizza);
-
-        } else if (Object.keys(item).includes("drinks")) {
-            const combosItemIndex = combosItem.findIndex(item => Object.keys(item).includes("drinks"));
-
-            return drinks.map(drinksItem => <InsideSmallCard key={ind + drinksItem.name} 
-                name={drinksItem.name} 
-                description={drinksItem.description}
-                img={drinksItem.img}  />).slice(0, combosItem[combosItemIndex].drinks);
-
-        } else if (Object.keys(item).includes("dessert")) {
-            const combosItemIndex = combosItem.findIndex(item => Object.keys(item).includes("dessert"));
-
-            return dessert.map(dessertItem => <InsideSmallCard key={ind + dessertItem.name} 
-                name={dessertItem.name} 
-                description={dessertItem.description}
-                img={dessertItem.img}  />).slice(0, combosItem[combosItemIndex].dessert);
-
-        } else {
-            return null;
-        }
-    });
+    const content = combosItems.map(item => <InsideSmallCard key={item.name} 
+                                                            isClicked={item.isClicked} 
+                                                            name={item.name} 
+                                                            description={item.description} 
+                                                            img={item.img} 
+                                                            btns={item.btns} />
+    ); 
 
     // добавить информирование о добавлении в корзину
 

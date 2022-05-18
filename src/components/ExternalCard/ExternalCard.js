@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addNewDessertItem, addNewDrinksItem, addNewSnacksItem } from '../../store/basketSlice';
 import addItemWithFilterToBasket from '../../services/addItemWithFilterToBasket';
+import useApiData from '../../services/useApiData';
 import useNum from '../../services/useNum';
 import Portal from '../Portal/Portal';
 
@@ -13,6 +15,27 @@ const ExternalCard = ({img, image, price, cost, name, description, btnName, Insi
     const basket = useSelector(state => state.basket.basket[pageName]);
     const dispatch = useDispatch();
     const [someNum] = useNum(pageName);
+
+    const location = useLocation();
+
+    const [,,, getRequestP] = useApiData("pizza");
+    const [,,, getRequestDe] = useApiData("dessert");
+    const [,,, getRequestDr] = useApiData("drinks");
+
+    const pizza = useSelector(state => state.shop.pizza);
+    const dessert = useSelector(state => state.shop.dessert);
+    const drinks = useSelector(state => state.shop.drinks);
+
+    useEffect(() => {
+        if(location.pathname === "/combos") {
+            if (pizza.length < 1 || dessert.length < 1 || drinks.length < 1) {
+                getRequestP("http://localhost:3001/api/pizza");
+                getRequestDe("http://localhost:3001/api/dessert");
+                getRequestDr("http://localhost:3001/api/drinks");
+            }
+        }
+        // eslint-disable-next-line
+    }, []);
 
     const handleClick = (e) => {
         if (e.target.localName !== 'button' || btnName === "Выбрать") {

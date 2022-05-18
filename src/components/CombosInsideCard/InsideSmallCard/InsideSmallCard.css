@@ -2,12 +2,16 @@
     cursor: pointer;
     margin: 0 auto;
     width: 410px;
-    min-height: 160px;
+    height: 160px;
     padding: 18px;
     display: flex;
     border-radius: 16px;
     background-color: white;
     box-shadow: 1px 1px 8px rgb(194, 193, 193);
+    border: 1px solid white;
+}
+.inside-small-card__active{
+    border: 1px solid tomato;
 }
 .inside-small-card__img img{
     width: 80px;
@@ -39,4 +43,29 @@
     align-items: center;
     justify-content: center;
     border-radius: 20px;
+}
+.dough__btns{
+    width: 270px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: rgb(243, 243, 243);
+    border-radius: 12px;
+}
+.dough__btns-left{
+    width: 125px;
+    height: 27px;
+    padding: 5px;
+    border-radius: 13px;
+}
+.dough__btns-rigth{
+    width: 125px;
+    height: 27px;
+    padding: 5px;
+    border-radius: 13px;
+}
+.dough__btns-active{
+    background-color: white;
+    box-shadow: 1px 1px 8px grey;
 }
