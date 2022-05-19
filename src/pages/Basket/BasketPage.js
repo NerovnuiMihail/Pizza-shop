@@ -36,8 +36,9 @@ const BasketPage = () => {
         const snacksCost = snacksItems.reduce((prev, current) => prev + (+current.cost * +current.count), 0);
         const drinksCost = drinksItems.reduce((prev, current) => prev + (+current.cost * +current.count), 0);
         const dessertCost = dessertItems.reduce((prev, current) => prev + (+current.cost * +current.count), 0);
+        const combosCost = combosItems.reduce((prev, current) => prev + (+current.cost * +current.count), 0);
 
-        return pizzaCost + dessertCost + drinksCost + snacksCost;
+        return pizzaCost + dessertCost + drinksCost + snacksCost + combosCost;
     }
 
     const handleDeleteBasketAllItems = (oldData, newData) => {
@@ -122,7 +123,7 @@ const BasketPage = () => {
     };
 
     const visibleContent = () => {
-        return pizzaItems.length || snacksItems.length || drinksItems.length || dessertItems.length > 0
+        return pizzaItems.length || snacksItems.length || drinksItems.length || combosItems.length || dessertItems.length > 0
     }
 
     const BasketMinimalCost = !visibleContent() ? null : (<div className="basket-minimal-cost">Минимальная сумма заказа 649 &#x20bd;</div>);

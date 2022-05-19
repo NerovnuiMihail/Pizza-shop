@@ -10,6 +10,7 @@ const InsideExtraSmallCard = ({id, img, name, pageName, description, additionall
 
     const handleChange = () => {
         const activeItem = combosItems.filter(item => item.isClicked)[0];
+        const dough = combosItems.filter(item => item.isClicked)[0].dough;
 
         const filtredOldCombos = combosItems.filter(item => item.name !== activeItem.name);
 
@@ -18,6 +19,7 @@ const InsideExtraSmallCard = ({id, img, name, pageName, description, additionall
             num: activeItem.num,
             pageName: pageName,
             isClicked: true,
+            dough,
             name: name,
             description: description ? description : additionally ? additionally.default.join(', ') : null,
             img: img,

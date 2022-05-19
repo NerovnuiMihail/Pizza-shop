@@ -1,5 +1,8 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { v4 } from 'uuid';
+import useNum from '../../services/useNum';
+import { addNewCombosItem } from '../../store/basketSlice';
 import { setCombosItem } from '../../store/combosSlice';
 import InsideSmallCard from './InsideSmallCard/InsideSmallCard';
 import InsideExtraSmallCard from './InsideExtraSmallCard/InsideExtraSmallCard';
@@ -10,8 +13,9 @@ import './CombosInsideCard.css';
 
 
 const CombosInsideCard = ({setIsVisible, id, name, description, startPrice, startPriceWithSale, imgPreview, combosItem}) => {
+    const [someNum] = useNum("combos");
     const dispatch = useDispatch();
-
+    const combosBasketItems = useSelector(state => state.basket.basket.combos);
     const pizza = useSelector(state => state.shop.pizza);
     const dessert = useSelector(state => state.shop.dessert);
     const drinks = useSelector(state => state.shop.drinks);
@@ -31,7 +35,7 @@ const CombosInsideCard = ({setIsVisible, id, name, description, startPrice, star
                         isClicked: false,
                         name: pizza[i].name,
                         description: pizza[i].additionally.default.join(', '),
-                        img: pizza[i].img.traditional,
+                        img: pizza[i].img,
                         btns: "pizza"
                     });
                 }
@@ -91,7 +95,7 @@ const CombosInsideCard = ({setIsVisible, id, name, description, startPrice, star
         }
     };
 
-    const content = combosItems.map(item => <InsideSmallCard key={item.name} 
+    const content = combosItems.map((item,ind) => <InsideSmallCard key={item.num + ind} 
                                                             isClicked={item.isClicked} 
                                                             name={item.name} 
                                                             description={item.description} 
@@ -107,17 +111,88 @@ const CombosInsideCard = ({setIsVisible, id, name, description, startPrice, star
     const activeItemsChange = (activeItem) => {
         switch (activeItem) {
             case "pizza":
-                return pizza.map(item => <InsideExtraSmallCard key={item.id} {...item} img={activeItemDough ? item.img[activeItemDough] : item.img.traditional} pageName="pizza" />);
+                return pizza.map((item, ind) => <InsideExtraSmallCard
+                        key={item.id + ind} 
+                        {...item} 
+                        img={activeItemDough ? item.img[activeItemDough] : item.img.traditional} pageName="pizza" />);
             case "drinks":
-                return drinks.map(item => <InsideExtraSmallCard key={item.id} {...item} pageName="drinks" />);
+                return drinks.map((item, ind) => <InsideExtraSmallCard 
+                        key={item.id + ind} 
+                        {...item} 
+                        pageName="drinks" />);
             case "dessert":
-                return dessert.slice(0,2).map(item => <InsideExtraSmallCard key={item.id} {...item} pageName="dessert" />);
+                return dessert.slice(0,2).map(item => <InsideExtraSmallCard 
+                        key={item.id} 
+                        {...item} 
+                        pageName="dessert" />);
         
             default:
                 break;
         }
-    }
+    };
 
+    const sendToBasket = () => {
+        const currentDescription = combosItems.map(item => {
+            const chekedDough = item.dough ? {dough: item.dough} : null;
+
+            return {
+                name: item.name,
+                ...chekedDough,
+            }
+        });
+
+        const toBasket = {
+            key: v4(),
+            id,
+            img: imgPreview,
+            name,
+            cost: startPriceWithSale,
+            count: 1,
+            description,
+            descr: currentDescription,
+            pageName: "combos",
+            num: someNum() + 1
+        };
+
+        let filtred = false;
+
+        const oldBasket = combosBasketItems.map(item => {
+            if (item.descr.length === toBasket.descr.length) {
+                const check = [];
+
+                for (let i = 0; i < item.descr.length; i++) {
+                    if (item.descr[i].name === toBasket.descr[i].name && item.descr[i].dough === toBasket.descr[i].dough) {
+                        check.push(1);
+                    } else {
+                        check.push(0);
+                    }
+                }
+
+                if (check.includes(0)) {
+                    return item;
+                } else {
+                    filtred = true;
+
+                    return {
+                        ...item,
+                        count: item.count + 1
+                    };
+                }
+            } else {
+                return item;
+            }
+        });
+
+        if (filtred) {
+            dispatch(addNewCombosItem(oldBasket));  
+        } else {
+            const oldBaskets = combosBasketItems.slice();
+            oldBaskets.push(toBasket);
+            dispatch(addNewCombosItem(oldBaskets));  
+        }
+
+        hidePortal();
+    };
 
     // добавить информирование о добавлении в корзину
 
@@ -152,7 +227,7 @@ const CombosInsideCard = ({setIsVisible, id, name, description, startPrice, star
                         <div className="combos-price__sale"> {startPriceWithSale} &#x20bd;</div>
                         <div className="combos-price__whitout-sale"> {startPrice} &#x20bd;</div>
                     </div>
-                    <button className="combos-inside-card__btn">В корзину</button>
+                    <button onClick={sendToBasket} className="combos-inside-card__btn">В корзину</button>
                 </div>
             </div>
 

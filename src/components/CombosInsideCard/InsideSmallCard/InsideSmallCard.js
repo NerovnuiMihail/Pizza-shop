@@ -70,13 +70,15 @@ const InsideSmallCard = ({name, description, img, isClicked, btns, dough}) => {
         }
     };
 
+    const image = typeof img === "string" ? img : dough === "traditional" ? img.traditional : img.thin;
+
     return (
         <div 
             onClick={handleClicked} 
             className={isClicked ? "inside-small-card__wrapper inside-small-card__active" : "inside-small-card__wrapper"}
             style={isClicked && btns !== "pizza" ? {height: "120px"} : null}>
             <div className="inside-small-card__img">
-                <img src={img} alt={name} />
+                <img src={image} alt={name} />
             </div>
             <div className="inside-small-card__content">
                 <div className="inside-small-card__title"> {name} </div>
@@ -87,7 +89,7 @@ const InsideSmallCard = ({name, description, img, isClicked, btns, dough}) => {
                     <button className="inside-small-card__btn">Изменить</button> 
                 ) : btns !== "pizza" ? null : (
                     <div className="dough__btns">
-                        <button ref={traditionalRef} className={dough === "traditional" || dough === undefined ? "dough__btns-left dough__btns-active" : "dough__btns-left"}>Традиционное</button>
+                        <button ref={traditionalRef} className={dough === "traditional" ? "dough__btns-left dough__btns-active" : "dough__btns-left"}>Традиционное</button>
                         <button ref={thinRef} className={dough === "thin" ? "dough__btns-rigth dough__btns-active" : "dough__btns-rigth"}>Тонкое</button>
                     </div>
                 )}
