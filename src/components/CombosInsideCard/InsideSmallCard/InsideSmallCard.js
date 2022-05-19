@@ -17,7 +17,6 @@ const InsideSmallCard = ({name, description, img, isClicked, btns}) => {
             });
 
             dispatch(setCombosItem(offClickedOldItems));
-
         } else {
             const offClickedOldItems = combosItems.map(item => {
                 if (item.name === name) {
