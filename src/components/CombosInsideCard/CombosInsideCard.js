@@ -27,6 +27,7 @@ const CombosInsideCard = ({setIsVisible, id, name, description, startPrice, star
                         id: pizza[i].id,
                         num: ind + 1 + pizza.length + i,
                         pageName: "pizza",
+                        dough: "traditional",
                         isClicked: false,
                         name: pizza[i].name,
                         description: pizza[i].additionally.default.join(', '),
@@ -95,17 +96,18 @@ const CombosInsideCard = ({setIsVisible, id, name, description, startPrice, star
                                                             name={item.name} 
                                                             description={item.description} 
                                                             img={item.img} 
-                                                            btns={item.btns} />
+                                                            btns={item.btns} dough={item.dough} />
     ); 
 
     const isVisible = combosItems.filter(item => item.isClicked).length > 0;
 
     const activeItem = isVisible ? combosItems.filter(item => item.isClicked)[0].pageName : null;
+    const activeItemDough = isVisible ? combosItems.filter(item => item.isClicked)[0].dough : null;
 
     const activeItemsChange = (activeItem) => {
         switch (activeItem) {
             case "pizza":
-                return pizza.map(item => <InsideExtraSmallCard key={item.id} {...item} img={item.img.traditional} pageName="pizza" />);
+                return pizza.map(item => <InsideExtraSmallCard key={item.id} {...item} img={activeItemDough ? item.img[activeItemDough] : item.img.traditional} pageName="pizza" />);
             case "drinks":
                 return drinks.map(item => <InsideExtraSmallCard key={item.id} {...item} pageName="drinks" />);
             case "dessert":
@@ -116,8 +118,6 @@ const CombosInsideCard = ({setIsVisible, id, name, description, startPrice, star
         }
     }
 
-    // console.log(combosItems);
-    // console.log(activeItem);
 
     // добавить информирование о добавлении в корзину
 

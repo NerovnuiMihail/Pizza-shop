@@ -17,7 +17,7 @@ const InsideExtraSmallCard = ({id, img, name, pageName, description, additionall
             id: id,
             num: activeItem.num,
             pageName: pageName,
-            isClicked: false,
+            isClicked: true,
             name: name,
             description: description ? description : additionally ? additionally.default.join(', ') : null,
             img: img,

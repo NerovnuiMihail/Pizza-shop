@@ -1,22 +1,56 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { useRef } from 'react';
 import { setCombosItem } from '../../../store/combosSlice';
 
 import './InsideSmallCard.css';
 
-const InsideSmallCard = ({name, description, img, isClicked, btns}) => {
+const InsideSmallCard = ({name, description, img, isClicked, btns, dough}) => {
     const dispatch = useDispatch();
     const combosItems = useSelector(state => state.combos.combosItems);
-    
-    const handleClicked = () => {
-        if (isClicked) {
-            const offClickedOldItems = combosItems.map(item => {
-                return {
-                    ...item,
-                    isClicked: false
-                }
-            });
 
-            dispatch(setCombosItem(offClickedOldItems));
+    const traditionalRef = useRef(null);
+    const thinRef = useRef(null);
+    
+    const handleClicked = (e) => {
+
+        if (isClicked) {
+            if (e.target === traditionalRef.current) {
+                const doughItem = combosItems.map(item => {
+                    if (item.name === name) {
+                        return {
+                            ...item,
+                            dough: "traditional"
+                        }
+                    } else {
+                        return item;
+                    }
+                });
+                dispatch(setCombosItem(doughItem));
+            }
+            if (e.target === thinRef.current) {
+                const doughItem = combosItems.map(item => {
+                    if (item.name === name) {
+                        return {
+                            ...item,
+                            dough: "thin"
+                        }
+                    } else {
+                        return item;
+                    }
+                });
+                dispatch(setCombosItem(doughItem));
+            }
+            if (e.target !== traditionalRef.current && e.target !== thinRef.current) {
+                const offClickedOldItems = combosItems.map(item => {
+                    return {
+                        ...item,
+                        isClicked: false
+                    }
+                });
+    
+                dispatch(setCombosItem(offClickedOldItems));   
+            }
+
         } else {
             const offClickedOldItems = combosItems.map(item => {
                 if (item.name === name) {
@@ -53,8 +87,8 @@ const InsideSmallCard = ({name, description, img, isClicked, btns}) => {
                     <button className="inside-small-card__btn">Изменить</button> 
                 ) : btns !== "pizza" ? null : (
                     <div className="dough__btns">
-                        <button className="dough__btns-left dough__btns-active">Традиционное</button>
-                        <button className="dough__btns-rigth">Тонкое</button>
+                        <button ref={traditionalRef} className={dough === "traditional" || dough === undefined ? "dough__btns-left dough__btns-active" : "dough__btns-left"}>Традиционное</button>
+                        <button ref={thinRef} className={dough === "thin" ? "dough__btns-rigth dough__btns-active" : "dough__btns-rigth"}>Тонкое</button>
                     </div>
                 )}
             </div>
