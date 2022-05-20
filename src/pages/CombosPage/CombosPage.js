@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect,useRef } from 'react';
 import useApiData from '../../services/useApiData';
 import ExternalCard from '../../components/ExternalCard/ExternalCard';
 import CombosInsideCard from '../../components/CombosInsideCard/CombosInsideCard';
@@ -9,8 +9,11 @@ import './CombosPage.css';
 
 const CombosPage = ({head}) => {
     const [data, loading, error, getRequest] = useApiData("combos");
+    const bodyRef = useRef(null);
 
     useEffect(() => {
+        bodyRef.current.scrollIntoView();
+        
         getRequest('http://localhost:3001/api/combos');
         // eslint-disable-next-line
     }, []);
@@ -32,7 +35,7 @@ const CombosPage = ({head}) => {
     const loadingData = loading ? <Skeleton/> : null;
 
     return (
-        <div className="combos-page content-wrapper" style={head ? {paddingTop: "150px"} : null}>
+        <div ref={bodyRef} className="combos-page content-wrapper" style={head ? {paddingTop: "150px"} : null}>
 
             {cards}
             {loadingData}

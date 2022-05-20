@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { v4 } from 'uuid';
 import {     
     addNewPizzaItem,
@@ -31,6 +31,9 @@ import './BasketRegistration.css';
 
 const BasketRegistration = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const goBasketDelivery = () => navigate('/basketdelivery');
 
     const pizzaItems = useSelector(state => state.basket.basket.pizza);
     const combosItems = useSelector(state => state.basket.basket.combos);
@@ -127,8 +130,9 @@ const BasketRegistration = () => {
         const snacksCost = snacksItems.reduce((prev, current) => prev + (+current.cost * +current.count), 0);
         const drinksCost = drinksItems.reduce((prev, current) => prev + (+current.cost * +current.count), 0);
         const dessertCost = dessertItems.reduce((prev, current) => prev + (+current.cost * +current.count), 0);
+        const combosCost = combosItems.reduce((prev, current) => prev + (+current.cost * +current.count), 0);
 
-        return pizzaCost + dessertCost + drinksCost + snacksCost;
+        return pizzaCost + dessertCost + drinksCost + snacksCost + combosCost;
     }
 
     const sendBasketAndBuyerToBD = async () => {
@@ -156,11 +160,13 @@ const BasketRegistration = () => {
             const newBasket = combosItems.map(item => {
                 return {
                     id: item.id,
-                    title: "snacks",
+                    title: "combos",
                     name: item.name,
                     cost: item.cost,
                     count: item.count,
-                    img: item.img
+                    img: item.img,
+                    description: item.description,
+                    descr: item.descr
                 }
             });
 
@@ -284,8 +290,11 @@ const BasketRegistration = () => {
                 dispatch(setCityP(""));
                 dispatch(setCommentsP(""));
 
+                goBasketDelivery();
             } else {
                 throw new Error('Ошибка при отправке!');
+
+                // сделать информирование об ошибке отправки
             }
             
         } catch (error) {
@@ -380,8 +389,6 @@ const BasketRegistration = () => {
             }
         }
     };
-
-    // console.log('render');
 
     return (
         <div className="basket-registration-wrapper">
@@ -625,12 +632,10 @@ const BasketRegistration = () => {
                 <Link to="/basket">
                     <button className="form-wrapper__btn-prev">Назад в корзину</button>
                 </Link>
-                <Link to="/basketdelivery">
-                    <button 
-                        disabled={isDelivery ? isNextPageDelivery : isNextPagePickup}
-                        onClick={sendBasketAndBuyerToBD}
-                        className="form-wrapper__btn-next">Оформить заказ</button>
-                </Link>
+                <button 
+                    disabled={isDelivery ? isNextPageDelivery : isNextPagePickup}
+                    onClick={sendBasketAndBuyerToBD}
+                    className="form-wrapper__btn-next">Оформить заказ</button>
             </div>
         </div>
     );

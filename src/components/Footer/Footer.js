@@ -1,8 +1,23 @@
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+
 import './Footer.css';
 
 
 const Footer = () => {
+    const [prevIncome, setPrevIncome] = useState(null);
+    const [incomeNow, setIncomeNow] = useState(null);
+
+    useEffect(() => {
+        fetch("http://localhost:3001/api/popular/income")
+            .then(res => res.json())
+            .then(data => {
+                setPrevIncome(data.prevIncome);
+                setIncomeNow(data.incomeNow);
+            })
+            .catch(err => console.log("Ошибка запроса дохода магазина", err))
+    }, []);
+
     return (
         <footer>
             <div className="footer-wrapper content-wrapper">
@@ -35,8 +50,8 @@ const Footer = () => {
                     </ul>
                 </div>
                 <div className="footer-total">
-                    <div>Выручка в прошлом месяце: 32 007 777 рублей</div>
-                    <div>Выручка в текущем месяце: 2 456 321 рублей</div>
+                    <div>Выручка в прошлом месяце: {prevIncome} рублей</div>
+                    <div>Выручка в текущем месяце: {incomeNow} рублей</div>
                 </div>
             </div>
         </footer>

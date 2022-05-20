@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import {    
     DessertPage,
     DrinksPage,
@@ -10,8 +11,14 @@ import Slider from "../../components/Slider/Slider";
 import './HomePage.css';
 
 const HomePage = () => {
+    const bodyRef = useRef(null);
+
+    useEffect(() => {
+        bodyRef.current.scrollIntoView();
+    }, []);
+
     return (
-        <div className="home-page">
+        <div ref={bodyRef} className="home-page">
             <h1 className="home-page__titile">Самые популярные</h1>
 
             <Slider />

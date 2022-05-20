@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect,useRef } from 'react';
 import useApiData from '../../services/useApiData';
 import ExternalCard from '../../components/ExternalCard/ExternalCard';
 import Skeleton from '../../components/skeleton/Skeleton';
@@ -12,8 +12,10 @@ import './DrinksPage.css';
 const DrinksPage = ({head}) => {
     const [data, loading, error, getRequest] = useApiData("drinks");
     const [popular, isLoading, isError, getPopular] = useApiPopular("drinks");
+    const bodyRef = useRef(null);
 
     useEffect(() => {
+        bodyRef.current.scrollIntoView();
         getRequest('http://localhost:3001/api/drinks');
         getPopular();
          // eslint-disable-next-line
@@ -45,7 +47,7 @@ const DrinksPage = ({head}) => {
     const loadingData = loading ? <Skeleton/> : null;
 
     return (
-        <main className="drinks-page content-wrapper">
+        <main ref={bodyRef} className="drinks-page content-wrapper">
                         {!head ? null : (
                                 <div className="drinks-page__popular">
                                     <h1>Часто заказывают:</h1>
