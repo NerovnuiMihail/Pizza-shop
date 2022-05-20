@@ -26,6 +26,7 @@ import {
     setCityP,
     setCommentsP
 } from '../../../store/buyerSlice';
+import Portal from '../../../components/Portal/Portal';
 
 import './BasketRegistration.css';
 
@@ -34,6 +35,7 @@ const BasketRegistration = () => {
     const navigate = useNavigate();
 
     const goBasketDelivery = () => navigate('/basketdelivery');
+    const [isVisible, setIsVisible] = useState(false);
 
     const pizzaItems = useSelector(state => state.basket.basket.pizza);
     const combosItems = useSelector(state => state.basket.basket.combos);
@@ -89,6 +91,15 @@ const BasketRegistration = () => {
     useEffect(() => {
         isCorrectlyInputs();
     });
+
+    useEffect(() => {
+        document.body.addEventListener('click', hidePortal);
+
+        return () => {
+            document.body.removeEventListener('click', hidePortal);
+        }
+         // eslint-disable-next-line
+    }, []);
 
     const handleSwitchMethodDelivery = (e) => {
         switch (e.target.textContent) {
@@ -293,13 +304,27 @@ const BasketRegistration = () => {
                 goBasketDelivery();
             } else {
                 throw new Error('Ошибка при отправке!');
-
                 // сделать информирование об ошибке отправки
             }
             
         } catch (error) {
+            showPortal();
             console.log(error);
         }
+    };
+
+    const showPortal = () => {
+        document.querySelector('#modal-root').style.display = 'block';
+        document.querySelector('.header').style.marginRight = "17px";
+        document.body.style.overflow = 'hidden';
+        setIsVisible(true);
+    };
+
+    const hidePortal = () => {
+        document.body.style.overflow = "";
+        document.querySelector('#modal-root').style.display = "none";
+        document.querySelector('.header').style.marginRight = "";
+        setIsVisible(false);
     };
 
     const isCorrectlyInputs = () => {
@@ -391,253 +416,262 @@ const BasketRegistration = () => {
     };
 
     return (
-        <div className="basket-registration-wrapper">
-            <div className="basket-status">
-                <div className="status-steps">
-                    <div className="status-steps__number active-number">1</div>
-                    <div className="status-steps__line"></div>
-                    <div className="status-steps__number active-number">2</div>
-                    <div className="status-steps__line"></div>
-                    <div className="status-steps__number">3</div>
-                </div>
-                <div className="status-descr">
-                    <div className="status-descr__text">Корзина</div>
-                    <div className="status-descr__text">Оформление</div>
-                    <div className="status-descr__text">Заказ оформлен</div>
-                </div>
-            </div>
-
-            <div className="basket-registration__form-wrapper form-wrapper">
-                <div className="form-wrapper__titles">
-                    <div 
-                        ref={refDelivery}
-                        onClick={handleSwitchMethodDelivery}
-                        className="form-wrapper__titles-item titles-item-active">Доставка</div>
-                    <div 
-                        ref={refPickup}
-                        onClick={handleSwitchMethodDelivery}
-                        className="form-wrapper__titles-item">Самовывоз</div>
-                    {isDelivery ? null : <div className="form-wrapper__titles-hide-item">При самовывозе - скидка!    <span> 10% </span></div>}
+        <>
+            <div className="basket-registration-wrapper">
+                <div className="basket-status">
+                    <div className="status-steps">
+                        <div className="status-steps__number active-number">1</div>
+                        <div className="status-steps__line"></div>
+                        <div className="status-steps__number active-number">2</div>
+                        <div className="status-steps__line"></div>
+                        <div className="status-steps__number">3</div>
+                    </div>
+                    <div className="status-descr">
+                        <div className="status-descr__text">Корзина</div>
+                        <div className="status-descr__text">Оформление</div>
+                        <div className="status-descr__text">Заказ оформлен</div>
+                    </div>
                 </div>
 
-                {isPickup ? null : (
-                    <div className="form-wrapper__delivery">
-                        <form name="form-wrapper__delivery" className="form-delivery">
-                            <fieldset>
-                                <div>
-                                    <input 
-                                        onChange={(e) => dispatch(setNameD(e.target.value))}
-                                        type="text" 
-                                        className="custom-inp" 
-                                        value={nameD} 
-                                        placeholder="Имя" />
-                                    <div ref={refcorrectlyNameD} className="warning-mistake">Минимальное количество символов 2!</div>   
-                                </div>
-                                <div>
-                                    <input 
-                                        onChange={(e) => dispatch(setTelD(e.target.value))}
-                                        type="number" 
-                                        className="custom-inp" 
-                                        value={telD} 
-                                        placeholder="Телефон" />
-                                    <div ref={refcorrectlyTelD} className="warning-mistake">Некорректный номер! (Пример:  960 111 22 33)</div> 
-                                </div>
-                            </fieldset>
+                <div className="basket-registration__form-wrapper form-wrapper">
+                    <div className="form-wrapper__titles">
+                        <div 
+                            ref={refDelivery}
+                            onClick={handleSwitchMethodDelivery}
+                            className="form-wrapper__titles-item titles-item-active">Доставка</div>
+                        <div 
+                            ref={refPickup}
+                            onClick={handleSwitchMethodDelivery}
+                            className="form-wrapper__titles-item">Самовывоз</div>
+                        {isDelivery ? null : <div className="form-wrapper__titles-hide-item">При самовывозе - скидка!    <span> 10% </span></div>}
+                    </div>
 
-                            <fieldset>
+                    {isPickup ? null : (
+                        <div className="form-wrapper__delivery">
+                            <form name="form-wrapper__delivery" className="form-delivery">
+                                <fieldset>
+                                    <div>
+                                        <input 
+                                            onChange={(e) => dispatch(setNameD(e.target.value))}
+                                            type="text" 
+                                            className="custom-inp" 
+                                            value={nameD} 
+                                            placeholder="Имя" />
+                                        <div ref={refcorrectlyNameD} className="warning-mistake">Минимальное количество символов 2!</div>   
+                                    </div>
+                                    <div>
+                                        <input 
+                                            onChange={(e) => dispatch(setTelD(e.target.value))}
+                                            type="number" 
+                                            className="custom-inp" 
+                                            value={telD} 
+                                            placeholder="Телефон" />
+                                        <div ref={refcorrectlyTelD} className="warning-mistake">Некорректный номер! (Пример:  960 111 22 33)</div> 
+                                    </div>
+                                </fieldset>
+
+                                <fieldset>
+                                    <div>
+                                        <select 
+                                            onChange={(e) => dispatch(setCityD(e.target.value))} 
+                                            name="city" 
+                                            value={cityD} 
+                                            className="custom-select" >
+                                            <option value="default" className="custom-option">Выберите город</option>
+                                            <option value="voronezh" className="custom-option">Воронеж</option>
+                                        </select>
+                                        <div ref={refcorrectlyCityD} className="warning-mistake">Необходимо выбрать город!</div> 
+                                    </div>
+                                    <div>
+                                        <input 
+                                            onChange={(e) => dispatch(setStreetD(e.target.value))}
+                                            type="text" 
+                                            className="custom-inp" 
+                                            value={streetD} 
+                                            placeholder="Улица"/>
+                                        <div ref={refcorrectlyStreetD} className="warning-mistake">Минимальное количество символов 5!</div> 
+                                    </div>
+                                </fieldset>
+
+                                <fieldset>
+                                    <div>
+                                        <input 
+                                            onChange={(e) => dispatch(setHouseD(e.target.value))}
+                                            type="text" 
+                                            className="custom-inp-place" 
+                                            value={houseD} 
+                                            placeholder="Дом"/>
+                                        <div ref={refcorrectlyHouseD} className="warning-mistake">Дом не заполнен!</div> 
+                                    </div>
+                                    <div>
+                                        <input 
+                                            onChange={(e) => dispatch(setRoomD(e.target.value))}
+                                            type="number" 
+                                            className="custom-inp-place" 
+                                            value={roomD} 
+                                            placeholder="Квартира"/>
+                                        <div className="somediv"></div>
+                                    </div>
+                                    <div>
+                                        <input 
+                                            onChange={(e) => dispatch(setEntranceD(e.target.value))}
+                                            type="text" 
+                                            className="custom-inp-place" 
+                                            value={entranceD} 
+                                            placeholder="Подъезд"/>
+                                        <div className="somediv"></div>
+                                    </div>
+                                    <div>
+                                        <input
+                                            onChange={(e) => dispatch(setFloorD(e.target.value))} 
+                                            type="number" 
+                                            className="custom-inp-place" 
+                                            value={floorD} 
+                                            placeholder="Этаж"/>
+                                        <div className="somediv"></div>
+                                    </div>
+                                </fieldset>
+
+                                <textarea 
+                                    onChange={(e) => dispatch(setCommentsD(e.target.value))} 
+                                    value={commentsD} 
+                                    name="comments" cols="30" rows="10" 
+                                    className="custom-textarea" 
+                                    placeholder="Комментарии"></textarea>
+                            </form>
+                        </div>
+                    )}
+
+                    {isDelivery ? null : (
+                        <div className="form-wrapper__pickup">
+                            <form name="form-wrapper__pickup" className="form-pickup">
+                                <fieldset>
+                                    <div>
+                                        <input 
+                                            onChange={(e) => dispatch(setNameP(e.target.value))} 
+                                            value={nameP} 
+                                            type="text" 
+                                            className="custom-inp" 
+                                            placeholder="Имя"/>
+                                        <div ref={refcorrectlyNameP} className="warning-mistake">Минимальное количество символов 2!</div> 
+                                    </div>
+                                    <div>
+                                        <input 
+                                            onChange={(e) => dispatch(setTelP(e.target.value))} 
+                                            value={telP} 
+                                            type="number" 
+                                            className="custom-inp" 
+                                            placeholder="Телефон"/>
+                                        <div ref={refcorrectlyTelP} className="warning-mistake">Некорректный номер! (Пример: 960 111 22 33)</div> 
+                                    </div>
+                                </fieldset>
+        
+                                <fieldset>
                                 <div>
                                     <select 
-                                        onChange={(e) => dispatch(setCityD(e.target.value))} 
+                                        onChange={(e) => dispatch(setCityP(e.target.value))} 
+                                        value={cityP} 
                                         name="city" 
-                                        value={cityD} 
                                         className="custom-select" >
                                         <option value="default" className="custom-option">Выберите город</option>
                                         <option value="voronezh" className="custom-option">Воронеж</option>
                                     </select>
-                                    <div ref={refcorrectlyCityD} className="warning-mistake">Необходимо выбрать город!</div> 
+                                    <div ref={refcorrectlyCityP} className="warning-mistake">Необходимо выбрать город!</div> 
                                 </div>
                                 <div>
-                                    <input 
-                                        onChange={(e) => dispatch(setStreetD(e.target.value))}
-                                        type="text" 
-                                        className="custom-inp" 
-                                        value={streetD} 
-                                        placeholder="Улица"/>
-                                    <div ref={refcorrectlyStreetD} className="warning-mistake">Минимальное количество символов 5!</div> 
+                                    <select 
+                                        onChange={(e) => dispatch(setRestaurantP(e.target.value))} 
+                                        value={restaurantP} 
+                                        name="restaurant" 
+                                        className="custom-select">
+                                            <option value="default" className="custom-option">Выберите ресторан</option>
+                                            <option value="moscovprospect" className="custom-option">Московский проспект</option>
+                                    </select>
+                                    <div ref={refcorrectlyRestaurantP} className="warning-mistake">Необходимо выбрать ресторан!</div> 
                                 </div>
-                            </fieldset>
+                                </fieldset>
+                                <textarea 
+                                    onChange={(e) => dispatch(setCommentsP(e.target.value))} 
+                                    value={commentsP} 
+                                    name="comments" cols="30" rows="10" 
+                                    className="custom-textarea" 
+                                    placeholder="Комментарии"></textarea>
+                            </form>
+                        </div>
+                    )}
+                </div>
 
-                            <fieldset>
-                                <div>
-                                    <input 
-                                        onChange={(e) => dispatch(setHouseD(e.target.value))}
-                                        type="text" 
-                                        className="custom-inp-place" 
-                                        value={houseD} 
-                                        placeholder="Дом"/>
-                                    <div ref={refcorrectlyHouseD} className="warning-mistake">Дом не заполнен!</div> 
-                                </div>
-                                <div>
-                                    <input 
-                                        onChange={(e) => dispatch(setRoomD(e.target.value))}
-                                        type="number" 
-                                        className="custom-inp-place" 
-                                        value={roomD} 
-                                        placeholder="Квартира"/>
-                                    <div className="somediv"></div>
-                                </div>
-                                <div>
-                                    <input 
-                                        onChange={(e) => dispatch(setEntranceD(e.target.value))}
-                                        type="text" 
-                                        className="custom-inp-place" 
-                                        value={entranceD} 
-                                        placeholder="Подъезд"/>
-                                    <div className="somediv"></div>
-                                </div>
-                                <div>
-                                    <input
-                                        onChange={(e) => dispatch(setFloorD(e.target.value))} 
-                                        type="number" 
-                                        className="custom-inp-place" 
-                                        value={floorD} 
-                                        placeholder="Этаж"/>
-                                    <div className="somediv"></div>
-                                </div>
-                            </fieldset>
+                <div className="form-wrapper__payment">
+                    {isPickup ? null : (
+                        <div className="payment-delivery">
+                            <input 
+                                onChange={handleChangeRadioMethodDelivery}
+                                checked={deliveryCash}
+                                ref={refdeliveryCash}
+                                type="radio" 
+                                id="radio1" 
+                                name="delivery-payment" 
+                                value="cash"/>
+                            <label htmlFor="radio1">Оплата наличными курьеру</label>
+        
+                            <input 
+                                onChange={handleChangeRadioMethodDelivery}
+                                checked={deliveryCard}
+                                ref={refdeliveryCard}
+                                type="radio" 
+                                id="radio2" 
+                                name="delivery-payment" 
+                                value="card"/>
+                            <label htmlFor="radio2">Оплата картой курьеру</label>
+                        </div>
+                    )}
 
-                            <textarea 
-                                onChange={(e) => dispatch(setCommentsD(e.target.value))} 
-                                value={commentsD} 
-                                name="comments" cols="30" rows="10" 
-                                className="custom-textarea" 
-                                placeholder="Комментарии"></textarea>
-                        </form>
-                    </div>
-                )}
+                    {isDelivery ? null : (
+                        <div className="payment-pickup">
+                            <input 
+                                onChange={handleChangeRadioMethodPickup}
+                                checked={pickupCash}
+                                ref={refpickupCash}
+                                type="radio" 
+                                id="radio3" 
+                                name="delivery-pickup"
+                                value="cash"/>
+                            <label htmlFor="radio3">Оплата наличными при получении</label>
+        
+                            <input 
+                                onChange={handleChangeRadioMethodPickup}
+                                checked={pickupCard}
+                                ref={refpickupCard}
+                                type="radio" 
+                                id="radio4" 
+                                name="delivery-pickup"
+                                value="card"/>
+                            <label htmlFor="radio4">Оплата картой при получении</label>
+                        </div>
+                    )}
+                </div> 
 
-                {isDelivery ? null : (
-                    <div className="form-wrapper__pickup">
-                        <form name="form-wrapper__pickup" className="form-pickup">
-                            <fieldset>
-                                <div>
-                                    <input 
-                                        onChange={(e) => dispatch(setNameP(e.target.value))} 
-                                        value={nameP} 
-                                        type="text" 
-                                        className="custom-inp" 
-                                        placeholder="Имя"/>
-                                    <div ref={refcorrectlyNameP} className="warning-mistake">Минимальное количество символов 2!</div> 
-                                </div>
-                                <div>
-                                    <input 
-                                        onChange={(e) => dispatch(setTelP(e.target.value))} 
-                                        value={telP} 
-                                        type="number" 
-                                        className="custom-inp" 
-                                        placeholder="Телефон"/>
-                                    <div ref={refcorrectlyTelP} className="warning-mistake">Некорректный номер! (Пример: 960 111 22 33)</div> 
-                                </div>
-                            </fieldset>
-    
-                            <fieldset>
-                            <div>
-                                <select 
-                                    onChange={(e) => dispatch(setCityP(e.target.value))} 
-                                    value={cityP} 
-                                    name="city" 
-                                    className="custom-select" >
-                                    <option value="default" className="custom-option">Выберите город</option>
-                                    <option value="voronezh" className="custom-option">Воронеж</option>
-                                </select>
-                                <div ref={refcorrectlyCityP} className="warning-mistake">Необходимо выбрать город!</div> 
-                            </div>
-                            <div>
-                                <select 
-                                    onChange={(e) => dispatch(setRestaurantP(e.target.value))} 
-                                    value={restaurantP} 
-                                    name="restaurant" 
-                                    className="custom-select">
-                                        <option value="default" className="custom-option">Выберите ресторан</option>
-                                        <option value="moscovprospect" className="custom-option">Московский проспект</option>
-                                </select>
-                                <div ref={refcorrectlyRestaurantP} className="warning-mistake">Необходимо выбрать ресторан!</div> 
-                            </div>
-                            </fieldset>
-                            <textarea 
-                                onChange={(e) => dispatch(setCommentsP(e.target.value))} 
-                                value={commentsP} 
-                                name="comments" cols="30" rows="10" 
-                                className="custom-textarea" 
-                                placeholder="Комментарии"></textarea>
-                        </form>
-                    </div>
-                )}
+                {isDelivery ? <div className="basket-total-cost">Сумма заказа: {calculateTotalCost()} &#x20bd;</div> :
+                <div className="basket-total-cost">Сумма заказа: {Math.floor(calculateTotalCost()/100*90)} &#x20bd;</div> }
+
+                <div className="form-wrapper__btns">
+                    <Link to="/basket">
+                        <button className="form-wrapper__btn-prev">Назад в корзину</button>
+                    </Link>
+                    <button 
+                        disabled={isDelivery ? isNextPageDelivery : isNextPagePickup}
+                        onClick={sendBasketAndBuyerToBD}
+                        className="form-wrapper__btn-next">Оформить заказ</button>
+                </div>
             </div>
 
-            <div className="form-wrapper__payment">
-                {isPickup ? null : (
-                    <div className="payment-delivery">
-                        <input 
-                            onChange={handleChangeRadioMethodDelivery}
-                            checked={deliveryCash}
-                            ref={refdeliveryCash}
-                            type="radio" 
-                            id="radio1" 
-                            name="delivery-payment" 
-                            value="cash"/>
-                        <label htmlFor="radio1">Оплата наличными курьеру</label>
-    
-                        <input 
-                            onChange={handleChangeRadioMethodDelivery}
-                            checked={deliveryCard}
-                            ref={refdeliveryCard}
-                            type="radio" 
-                            id="radio2" 
-                            name="delivery-payment" 
-                            value="card"/>
-                        <label htmlFor="radio2">Оплата картой курьеру</label>
-                    </div>
-                )}
-
-                {isDelivery ? null : (
-                    <div className="payment-pickup">
-                        <input 
-                            onChange={handleChangeRadioMethodPickup}
-                            checked={pickupCash}
-                            ref={refpickupCash}
-                            type="radio" 
-                            id="radio3" 
-                            name="delivery-pickup"
-                            value="cash"/>
-                        <label htmlFor="radio3">Оплата наличными при получении</label>
-    
-                        <input 
-                            onChange={handleChangeRadioMethodPickup}
-                            checked={pickupCard}
-                            ref={refpickupCard}
-                            type="radio" 
-                            id="radio4" 
-                            name="delivery-pickup"
-                            value="card"/>
-                        <label htmlFor="radio4">Оплата картой при получении</label>
-                    </div>
-                )}
-            </div> 
-
-            {isDelivery ? <div className="basket-total-cost">Сумма заказа: {calculateTotalCost()} &#x20bd;</div> :
-             <div className="basket-total-cost">Сумма заказа: {Math.floor(calculateTotalCost()/100*90)} &#x20bd;</div> }
-
-            <div className="form-wrapper__btns">
-                <Link to="/basket">
-                    <button className="form-wrapper__btn-prev">Назад в корзину</button>
-                </Link>
-                <button 
-                    disabled={isDelivery ? isNextPageDelivery : isNextPagePickup}
-                    onClick={sendBasketAndBuyerToBD}
-                    className="form-wrapper__btn-next">Оформить заказ</button>
-            </div>
-        </div>
+            {isVisible ? <Portal>
+                            <div onClick={hidePortal} className="basket-portal">
+                                <h2>Непредвиденная ошибка</h2>
+                                <h2>Повторите запрос позднее</h2>
+                            </div>
+                         </Portal> : null}
+        </>
     );
 }
 

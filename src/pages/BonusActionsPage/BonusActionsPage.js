@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import useApiData from '../../services/useApiData';
 import BonusCard from '../../components/BonusCard/BonusCard';
 import Skeleton from '../../components/skeleton/Skeleton';
@@ -8,8 +8,10 @@ import './BonusActionsPage.css';
 
 const BonusActionsPage = () => {
     const [data, loading, error, getRequest] = useApiData("bonus");
+    const bodyRef = useRef(null);
 
     useEffect(() => {
+        bodyRef.current.scrollIntoView();
         getRequest('http://localhost:3001/api/bonus');
          // eslint-disable-next-line
     }, []);
@@ -23,7 +25,7 @@ const BonusActionsPage = () => {
     const loadingData = loading ? <Skeleton/> : null;
 
     return (
-        <main className="content-wrapper bonus-page">
+        <main ref={bodyRef} className="content-wrapper bonus-page">
             <section className="bonus-content">
                 {errorMessage}
                 {loadingData}
