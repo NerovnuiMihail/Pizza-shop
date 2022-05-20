@@ -1,0 +1,24 @@
+.not-found{
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.not-found h1{
+    font-size: 25px;
+    margin-bottom: 30px;
+}
+.not-found span{
+    color: tomato;
+    text-decoration: underline;
+}
+.not-found h2{
+    padding: 10px;
+    font-size: 20px;
+    box-shadow: 1px 1px 12px grey;
+    border-radius: 12px;
+    margin-bottom: 100px;
+}
+.not-found h2:hover{
+    box-shadow: 1px 1px 18px grey;
+}
