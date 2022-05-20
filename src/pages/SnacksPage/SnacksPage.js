@@ -1,4 +1,5 @@
 import { useEffect,useRef } from 'react';
+import {Helmet} from "react-helmet";
 import useApiData from '../../services/useApiData';
 import ExternalCard from '../../components/ExternalCard/ExternalCard';
 import Skeleton from '../../components/skeleton/Skeleton';
@@ -48,22 +49,32 @@ const SnacksPage = ({head}) => {
     const loadingData = loading ? <Skeleton/> : null;
 
     return (
-        <main ref={bodyRef} className="snacks-page content-wrapper">
-            {!head ? null : (
-                                <div className="snacks-page__popular">
-                                    <h1>Часто заказывают:</h1>
-                                    <div className="snacks-popular">
-                                        {popularCards}
+        <>
+            <Helmet>
+                <meta
+                    name="description"
+                    content="Попробууйте наши самые лучшие закуски!"
+                />
+                <title>Закуски</title>
+            </Helmet>
+        
+            <main ref={bodyRef} className="snacks-page content-wrapper">
+                {!head ? null : (
+                                    <div className="snacks-page__popular">
+                                        <h1>Часто заказывают:</h1>
+                                        <div className="snacks-popular">
+                                            {popularCards}
+                                        </div>
                                     </div>
-                                </div>
-            )}
+                )}
 
-            <section className="snacks-content">
-                {errorMessage}
-                {loadingData}
-                {cards}
-            </section>
-        </main>
+                <section className="snacks-content">
+                    {errorMessage}
+                    {loadingData}
+                    {cards}
+                </section>
+            </main>
+        </>
     )
 }
 

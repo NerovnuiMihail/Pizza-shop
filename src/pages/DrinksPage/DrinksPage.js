@@ -1,4 +1,5 @@
 import { useEffect,useRef } from 'react';
+import {Helmet} from "react-helmet";
 import useApiData from '../../services/useApiData';
 import ExternalCard from '../../components/ExternalCard/ExternalCard';
 import Skeleton from '../../components/skeleton/Skeleton';
@@ -47,22 +48,32 @@ const DrinksPage = ({head}) => {
     const loadingData = loading ? <Skeleton/> : null;
 
     return (
-        <main ref={bodyRef} className="drinks-page content-wrapper">
-                        {!head ? null : (
-                                <div className="drinks-page__popular">
-                                    <h1>Часто заказывают:</h1>
-                                    <div className="drinks-popular">
-                                        {popularCards}
-                                    </div>
-                                </div>
-                        )}
+        <>
+            <Helmet>
+                <meta
+                    name="description"
+                    content="Наши лучшие напитки! Соки и кофе из лучших компонентов!"
+                />
+                <title>Напитки</title>
+            </Helmet>
 
-            <section className="drinks-content">
-                {errorMessage}
-                {loadingData}
-                {cards}
-            </section>
-        </main>
+            <main ref={bodyRef} className="drinks-page content-wrapper">
+                            {!head ? null : (
+                                    <div className="drinks-page__popular">
+                                        <h1>Часто заказывают:</h1>
+                                        <div className="drinks-popular">
+                                            {popularCards}
+                                        </div>
+                                    </div>
+                            )}
+
+                <section className="drinks-content">
+                    {errorMessage}
+                    {loadingData}
+                    {cards}
+                </section>
+            </main>
+        </>
     )
 }
 

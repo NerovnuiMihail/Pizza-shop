@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import {Helmet} from "react-helmet";
 import BasketItem from './BasketItem/BasketItem';
 import {
     addNewPizzaItem,
@@ -148,42 +149,52 @@ const BasketPage = () => {
                 ));
 
     return (
-        <div className="basket-wrapper">
-            <div className="basket-status">
-                <div className="status-steps">
-                    <div className="status-steps__number active-number">1</div>
-                    <div className="status-steps__line"></div>
-                    <div className="status-steps__number">2</div>
-                    <div className="status-steps__line"></div>
-                    <div className="status-steps__number">3</div>
+        <>
+            <Helmet>
+                <meta
+                    name="description"
+                    content="Корзина покупок"
+                />
+                <title>Корзина покупок</title>
+            </Helmet>
+        
+            <div className="basket-wrapper">
+                <div className="basket-status">
+                    <div className="status-steps">
+                        <div className="status-steps__number active-number">1</div>
+                        <div className="status-steps__line"></div>
+                        <div className="status-steps__number">2</div>
+                        <div className="status-steps__line"></div>
+                        <div className="status-steps__number">3</div>
+                    </div>
+                    <div className="status-descr">
+                        <div className="status-descr__text">Корзина</div>
+                        <div className="status-descr__text">Оформление</div>
+                        <div className="status-descr__text">Заказ оформлен</div>
+                    </div>
                 </div>
-                <div className="status-descr">
-                    <div className="status-descr__text">Корзина</div>
-                    <div className="status-descr__text">Оформление</div>
-                    <div className="status-descr__text">Заказ оформлен</div>
+
+                {BasketPlaceHolder}
+
+                {BasketContent}
+
+                {calculateTotalCost() > 649 ? null : BasketMinimalCost}
+
+                <div className="basket-info">
+                    <button 
+                        onClick={handleClearBasket} 
+                        disabled={calculateTotalCost() !== 0 ? false : true} 
+                        className="basket-clear-btn">Очистить корзину</button>
+                    <div className="basket-total-cost">Сумма заказа: {calculateTotalCost()} &#x20bd;</div>
                 </div>
+                
+                <Link to="/basketregistration">
+                    <button 
+                        disabled={calculateTotalCost() > 649 ? false : true} 
+                        className="basket-next-page">Перейти к оформлению</button>
+                </Link>
             </div>
-
-            {BasketPlaceHolder}
-
-            {BasketContent}
-
-            {calculateTotalCost() > 649 ? null : BasketMinimalCost}
-
-            <div className="basket-info">
-                <button 
-                    onClick={handleClearBasket} 
-                    disabled={calculateTotalCost() !== 0 ? false : true} 
-                    className="basket-clear-btn">Очистить корзину</button>
-                <div className="basket-total-cost">Сумма заказа: {calculateTotalCost()} &#x20bd;</div>
-            </div>
-            
-            <Link to="/basketregistration">
-                <button 
-                    disabled={calculateTotalCost() > 649 ? false : true} 
-                    className="basket-next-page">Перейти к оформлению</button>
-            </Link>
-        </div>
+        </>
     );
 }
 

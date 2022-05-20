@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import {Helmet} from "react-helmet";
 import { v4 } from 'uuid';
 import {     
     addNewPizzaItem,
@@ -417,6 +418,14 @@ const BasketRegistration = () => {
 
     return (
         <>
+            <Helmet>
+                <meta
+                    name="description"
+                    content="Форма сбора данных для доставки"
+                />
+                <title>Оформление</title>
+            </Helmet>
+
             <div className="basket-registration-wrapper">
                 <div className="basket-status">
                     <div className="status-steps">

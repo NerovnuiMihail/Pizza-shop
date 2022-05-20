@@ -1,6 +1,16 @@
-# Getting Started with Create React App and Redux
+## Description project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+    Интернет магазин по продаже пицци и сопутсвующих товаров.
+
+    Прототипом магазина выступил магазин Додо.
+
+    Материалы взяты из интернет магазинов https://dodopizza.ru/ и https://tashirpizza.ru/
+
+    Все статичные файлы берутся с сервера в проекте https://github.com/NerovnuiMihail/API_pizza_store
+
+    В проекте есть баги в разделе "комбо". Если выбрать набор с пиццей и поменять пиццу, то при изменении "теста", картинка не меняется, но "тесто" меняется в формируемом обьекте(сторе). Так же есть баг с одинаковой пиццей, когда выбрана одна и та же(при одинаковом "тесте") в нескольких карточках одного комбо, а это уже влияет на стор.
+    В ближайшее время будут исправлены данные ошибки.
+
 
 ## Available Scripts
 
@@ -39,8 +49,3 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).

@@ -1,4 +1,5 @@
 import { useEffect,useRef } from 'react';
+import {Helmet} from "react-helmet";
 import useApiData from '../../services/useApiData';
 import ExternalCard from '../../components/ExternalCard/ExternalCard';
 import CombosInsideCard from '../../components/CombosInsideCard/CombosInsideCard';
@@ -35,13 +36,21 @@ const CombosPage = ({head}) => {
     const loadingData = loading ? <Skeleton/> : null;
 
     return (
-        <div ref={bodyRef} className="combos-page content-wrapper" style={head ? {paddingTop: "150px"} : null}>
+        <>
+            <Helmet>
+                <meta
+                    name="description"
+                    content="Самое вкусное лучше брать сразу и много! Комбо наборы пицции, напитков и десертов!"
+                />
+                <title>Комбо наборы</title>
+            </Helmet>
 
-            {cards}
-            {loadingData}
-            {errorMessage}
-
-        </div>
+            <div ref={bodyRef} className="combos-page content-wrapper" style={head ? {paddingTop: "150px"} : null}>
+                {cards}
+                {loadingData}
+                {errorMessage}
+            </div>
+        </>
     )
 }
 

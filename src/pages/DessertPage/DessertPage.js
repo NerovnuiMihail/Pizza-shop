@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import {Helmet} from "react-helmet";
 import useApiData from '../../services/useApiData';
 import ExternalCard from '../../components/ExternalCard/ExternalCard';
 import Skeleton from '../../components/skeleton/Skeleton';
@@ -46,22 +47,32 @@ const DessertPage = ({head}) => {
     const loadingData = loading ? <Skeleton/> : null;
 
     return (
-        <main ref={bodyRef} className="dessert-page content-wrapper">
-                        {!head ? null : (
-                                <div className="dessert-page__popular">
-                                    <h1>Часто заказывают:</h1>
-                                    <div className="dessert-popular">
-                                        {popularCards}
-                                    </div>
-                                </div>
-                        )}
+        <>
+            <Helmet>
+                <meta
+                    name="description"
+                    content="Замечательные и вкуснейшие десерты от наших поваров!"
+                />
+                <title>Десерты</title>
+            </Helmet>
 
-            <section className="dessert-content">
-                {errorMessage}
-                {loadingData}
-                {cards}
-            </section>
-        </main>
+            <main ref={bodyRef} className="dessert-page content-wrapper">
+                            {!head ? null : (
+                                    <div className="dessert-page__popular">
+                                        <h1>Часто заказывают:</h1>
+                                        <div className="dessert-popular">
+                                            {popularCards}
+                                        </div>
+                                    </div>
+                            )}
+
+                <section className="dessert-content">
+                    {errorMessage}
+                    {loadingData}
+                    {cards}
+                </section>
+            </main>
+        </>
     )
 }
 

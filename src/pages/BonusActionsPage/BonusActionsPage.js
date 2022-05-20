@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import {Helmet} from "react-helmet";
 import useApiData from '../../services/useApiData';
 import BonusCard from '../../components/BonusCard/BonusCard';
 import Skeleton from '../../components/skeleton/Skeleton';
@@ -25,13 +26,23 @@ const BonusActionsPage = () => {
     const loadingData = loading ? <Skeleton/> : null;
 
     return (
-        <main ref={bodyRef} className="content-wrapper bonus-page">
-            <section className="bonus-content">
-                {errorMessage}
-                {loadingData}
-                {cards}
-            </section>
-        </main>
+        <>
+            <Helmet>
+                <meta
+                    name="description"
+                    content="Наши активные акции и скидки, а так же бонусы при покупках!"
+                />
+                <title>Актуальные бонусы и акции</title>
+            </Helmet>
+        
+            <main ref={bodyRef} className="content-wrapper bonus-page">
+                <section className="bonus-content">
+                    {errorMessage}
+                    {loadingData}
+                    {cards}
+                </section>
+            </main>
+        </>
     )
 }
 
